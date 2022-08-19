@@ -1,0 +1,30 @@
+{
+  "User": {
+    "userId": "",
+    "nickName": "",
+    "password": "",
+    "email": ""
+  },
+  "data": [
+    {
+      "productId": 0,
+      "productImage": "",
+      "productName": "",
+      "price": "",
+      "desc": "",
+      "category": "",
+      "createAt": ""
+    }
+  ],
+  "cart": [
+    {
+      "productId": 1,
+      "productImage": "string",
+      "productName": "string",
+      "price": 1,
+      "quantity": 1,
+      "desc": "string",
+      "category": "string"
+    }
+  ]
+}
