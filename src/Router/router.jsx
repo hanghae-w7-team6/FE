@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Main from " ../pages/Main";
+import Main from "../pages/Main";
 import Join from "../pages/Join";
 import Login from "../pages/Login";
 import Cart from "../pages/Cart";
