@@ -1,26 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layouts from "../Common/Layout";
 import styled from "styled-components";
+// import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loadProductThunk } from "../redux/modules/detailSlice";
 
 const Detail = () => {
+  const dispatch = useDispatch();
+  // const { productID } = useParams();
+  const detail = useSelector((state) => state.detail);
+  useEffect(() => {
+    dispatch(loadProductThunk());
+  }, []);
+
   return (
     <Layouts>
       <DetailWrap>
         <DetailImg />
         <DetailInfo>
           <ProductName>
-            <h2>[Kurly's] 간편하게 바삭, 치즈 롤까스</h2>
+            <h2>{detail.productName}</h2>
             <button style={{ width: "40px", height: "40px" }}></button>
           </ProductName>
-          <ProductDesc>한 입 가득 느껴지는 치즈의 맛</ProductDesc>
+          <ProductDesc>{detail.desc}</ProductDesc>
           <ProductPriceWrap>
-            <span>8,900</span>
+            <span>{detail.price}</span>
             <span> 원</span>
           </ProductPriceWrap>
           <ProductDelivery>
             <span>배송</span>
             <DeliveryInfo>
-              <p>샛별배송/일반배송</p>
+              <p>{detail.delivery}</p>
               <br />
               <p>
                 23시 전 주문시 내일 아침 7시 전 도착
@@ -31,12 +41,20 @@ const Detail = () => {
           </ProductDelivery>
           <ProductCategoryWrap>
             <span>구분</span>
-            <span>과일</span>
+            <span>{detail.category}</span>
           </ProductCategoryWrap>
+          <ProductUnit>
+            <span>판매단위</span>
+            <span>1개</span>
+          </ProductUnit>
+          <ProductSeller>
+            <span>판매자</span>
+            <span>컬리</span>
+          </ProductSeller>
           <ProductUI>
             <ProductTotal>
               <span>총 상품금액: </span>
-              <span> 8,900</span>
+              <span>{detail.price}</span>
               <span>원</span>
             </ProductTotal>
             <ButtonWrap>
@@ -182,10 +200,34 @@ const ProductCategoryWrap = styled.div`
   }
 `;
 
+const ProductUnit = styled.div`
+  margin-top: 20px;
+  span {
+    &:first-child {
+      margin-right: 93px;
+    }
+    &:last-child {
+      font-weight: bold;
+    }
+  }
+`;
+
+const ProductSeller = styled.div`
+  margin-top: 30px;
+  span {
+    &:first-child {
+      margin-right: 106px;
+    }
+    &:last-child {
+      font-weight: bold;
+    }
+  }
+`;
+
 // 디테일 우측 하단 가격/버튼wrap
 const ProductUI = styled.div`
   border: 1px solid blue;
-  margin-top: 141px;
+  margin-top: 59px;
 `;
 
 const ProductTotal = styled.div`

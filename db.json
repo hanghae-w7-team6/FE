@@ -5,14 +5,15 @@
     "password": "",
     "email": ""
   },
-  "data": [
+  "Product": [
     {
       "productId": 0,
-      "productImage": "",
-      "productName": "",
-      "price": "",
-      "desc": "",
-      "category": "",
+      "productImage": "https://img-cf.kurly.com/shop/data/goods/165606178688l0.jpg",
+      "productName": "[Kurly's] 간편하게 바삭, 치즈 롤까스",
+      "price": 8900,
+      "desc": "한 입 가득 느껴지는 치즈의 맛",
+      "delivery": "샛별배송/일반배송",
+      "category": "과일",
       "createAt": ""
     }
   ],
