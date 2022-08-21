@@ -1,10 +1,13 @@
 {
-  "User": {
-    "userId": "",
-    "nickName": "",
-    "password": "",
-    "email": ""
-  },
+  "User": [
+    {
+      "userId": "tester1",
+      "password": "hello123",
+      "nickName": "테스터님",
+      "email": "tester@naver.com",
+      "id": 1
+    }
+  ],
   "data": [
     {
       "productId": 0,
