@@ -24,3 +24,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 node_modules
+
+db.json
+useInput.jsx
+README.md
+.env

@@ -1,10 +1,48 @@
 {
-  "User": {
-    "userId": "",
-    "nickName": "",
-    "password": "",
-    "email": ""
-  },
+  "User": [
+    {
+      "userId": "tester1",
+      "password": "hello123",
+      "nickName": "테스터님",
+      "email": "tester@naver.com",
+      "id": 1
+    },
+    {
+      "userId": "hello",
+      "password": "hello123",
+      "nickName": "할로할로",
+      "email": "google@naver.com",
+      "id": 2
+    },
+    {
+      "userId": "hello2",
+      "password": "1234hello",
+      "nickName": "할로할로",
+      "email": "lala@gmail.com",
+      "id": 3
+    },
+    {
+      "userId": "hallo",
+      "password": "hello123",
+      "nickName": "할호하로",
+      "email": "ddd@g.com",
+      "id": 4
+    },
+    {
+      "userId": "hallo",
+      "password": "hellooo1",
+      "nickName": "하하하하",
+      "email": "j@gamil.com",
+      "id": 5
+    },
+    {
+      "userId": "hahaha",
+      "password": "hello123",
+      "nickName": "하하하하",
+      "email": "dd@ma.com",
+      "id": 6
+    }
+  ],
   "data": [
     {
       "productName": "cxvcxvxv",
