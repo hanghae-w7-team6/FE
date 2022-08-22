@@ -7,7 +7,7 @@ function Modal(props) {
     <Container modal="modal">
       <div className="modal">
         <div className="modalContent">
-          <div className="modalTitle">{props.ruleDesc}</div>
+          <div className="modalTitle">{props.children}</div>
           <div className="modalFooter">
             <button type="button" onClick={() => props.setModal(!props.modal)}>
               확인
