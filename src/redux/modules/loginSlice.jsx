@@ -7,9 +7,11 @@ export const loginThunk = createAsyncThunk(
   "loginSlice/loginThunk",
   async (payload, thunkAPI) => {
     try {
-      const response = await instance.post("", payload);
+      const response = await instance.post("/user/join", payload);
+
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      console.error(error);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }

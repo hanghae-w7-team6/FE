@@ -7,7 +7,7 @@ export const postProductAsync = createAsyncThunk(
   "post/postProduct",
   async (data, thunkAPI) => {
     try {
-      const res = await instance.post("http://localhost:3001/data", data);
+      const res = await instance.post("/product", data);
       return res.data;
     } catch (err) {
       console.error(err);
@@ -19,7 +19,7 @@ export const getProductAsync = createAsyncThunk(
   "get/AllProduct",
   async (thunkAPI) => {
     try {
-      const res = await instance.get("http://localhost:3001/data");
+      const res = await instance.get("/product");
       return res.data;
     } catch (error) {
       console.error(error);
