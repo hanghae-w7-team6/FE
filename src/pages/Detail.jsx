@@ -16,7 +16,7 @@ const Detail = () => {
   return (
     <Layouts>
       <DetailWrap>
-        <DetailImg />
+        <DetailImg src={detail.productImage} />
         <DetailInfo>
           <ProductName>
             <h2>{detail.productName}</h2>
@@ -27,6 +27,10 @@ const Detail = () => {
             <span>{detail.price}</span>
             <span> 원</span>
           </ProductPriceWrap>
+          <Discount>
+            <span>일반5% &nbsp;|</span>
+            <span>&nbsp; 1개당 {detail.price * 0.05} 원 적립</span>
+          </Discount>
           <ProductDelivery>
             <span>배송</span>
             <DeliveryInfo>
@@ -83,10 +87,10 @@ const DetailWrap = styled.div`
   justify-content: space-between;
 `;
 
-const DetailImg = styled.div`
+const DetailImg = styled.img`
   width: 430px;
   height: 552px;
-  background: url(https://img-cf.kurly.com/shop/data/goods/165606178688l0.jpg);
+  /* background: url({detail.productImage}); */
   background-size: cover;
 `;
 
@@ -129,7 +133,7 @@ const ProductDesc = styled.div`
 
 const ProductPriceWrap = styled.div`
   border: 1px solid greenyellow;
-  margin: 15px 0;
+  margin: 15px 0 0 0;
 
   span {
     &:first-child {
@@ -140,6 +144,24 @@ const ProductPriceWrap = styled.div`
     &:last-child {
       font-size: 18px;
       font-weight: bold;
+    }
+  }
+`;
+
+const Discount = styled.div`
+  border: 1px solid red;
+  height: 24px;
+  font-weight: bold;
+  letter-spacing: -0.5px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 10px;
+
+  span {
+    &:nth-child(1) {
+      font-size: 14px;
+      color: #999999;
     }
   }
 `;
@@ -227,7 +249,7 @@ const ProductSeller = styled.div`
 // 디테일 우측 하단 가격/버튼wrap
 const ProductUI = styled.div`
   border: 1px solid blue;
-  margin-top: 59px;
+  margin-top: 40px;
 `;
 
 const ProductTotal = styled.div`
