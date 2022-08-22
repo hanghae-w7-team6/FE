@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Layouts from "../Common/Layout";
-import InputForm from "../components/Join/InputForm";
+import JoinForm from "../components/Join/JoinForm";
 
 function Join() {
   return (
@@ -9,9 +9,9 @@ function Join() {
       <JoinTitle>회원가입</JoinTitle>
       <JoinBody>
         <RequirementInfo>
-          <MandatoryMark>*</MandatoryMark> 필수입력사항
+          <span>*</span> 필수입력사항
         </RequirementInfo>
-        <InputForm></InputForm>
+        <JoinForm></JoinForm>
       </JoinBody>
     </Layouts>
   );
@@ -39,7 +39,8 @@ const RequirementInfo = styled.div`
   color: rgb(102, 102, 102);
   line-height: 17px;
   text-align: right;
-`;
-const MandatoryMark = styled.span`
-  color: #ee6a7b;
+
+  & span {
+    color: #ee6a7b;
+  }
 `;

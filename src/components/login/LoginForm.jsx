@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { loginThunk } from "../../redux/modules/loginSlice";
+import useInput from "../../hooks/useInput";
 
 import styled from "styled-components";
 import { Input } from "../../elements/Input";
@@ -7,6 +9,14 @@ import { Btn } from "../../elements/Btn";
 
 function LoginForm() {
   const nav = useNavigate();
+  const [userId, onIdHandler] = useInput("");
+  const [password, onPasswordHandler] = useInput("");
+  console.log(userId, password);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    //  ! 아이디 + 비밀번호를 모두 입력해야 서브밋 아니면 "아이디 혹은 비밀번호를 입력해주세요" 출력
+  };
   return (
     <Container>
       <Title>로그인</Title>
@@ -19,6 +29,9 @@ function LoginForm() {
                 fontSize="14px"
                 placeholder="아이디를 입력해주세요"
                 type="text"
+                name="userId"
+                value={userId}
+                onChange={onIdHandler}
               />
             </InputWrapper>
             <InputWrapper>
@@ -27,6 +40,9 @@ function LoginForm() {
                 fontSize="14px"
                 placeholder="비밀번호를 입력해주세요"
                 type="password"
+                name="password"
+                value={password}
+                onChange={onPasswordHandler}
               />
             </InputWrapper>
           </InputArea>
@@ -44,6 +60,7 @@ function LoginForm() {
               backgroundColor="#5f0080"
               color="white"
               fontSize="16px"
+              onClick={submitHandler}
             >
               로그인
             </Btn>

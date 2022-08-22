@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { instance } from "./instance";
 
 // 초기값 선언
@@ -9,7 +9,7 @@ const initialState = {
 
 // thunk함수(회원가입) 선언
 export const joinThunk = createAsyncThunk(
-  "joinSlice/joinThunk", // ? <-액션타입이 맞나...?
+  "joinSlice/joinThunk",
   async (payload, thunkAPI) => {
     //Inputfield에서 받아온 유저정보(=payload)를 이용
     try {
@@ -32,7 +32,28 @@ export const idCheckThunk = createAsyncThunk(
     }
   }
 );
-
+// nickname 중복확인 thunk함수
+export const nickNameCheckThunk = createAsyncThunk(
+  "joinSlice/idCheckThunk",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await instance.put("/User", payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data); //통신 실패시 에러값 반환
+    }
+  }
+);
+// email 중복확인 thunk함수
+export const emailCheckThunk = createAsyncThunk(
+  "joinSlice/idCheckThunk",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await instance.put("/User", payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data); //통신 실패시 에러값 반환
+    }
+  }
+);
 // 슬라이스
 const joinSlice = createSlice({
   name: "data",

@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { joinThunk, idCheckThunk } from "../../redux/modules/joinSlice";
+import {
+  joinThunk,
+  idCheckThunk,
+  nickNameCheckThunk,
+  emailCheckThunk,
+} from "../../redux/modules/joinSlice";
 
 import { Btn } from "../../elements/Btn";
 import { Input } from "../../elements/Input";
 import Agreement from "./Agreement";
 import Modal from "./modal/Modal";
 
-function InputForm() {
+function JoinForm() {
   const dispatch = useDispatch();
 
   // input을 통해 들어오는 유저 정보
@@ -26,18 +31,23 @@ function InputForm() {
     setUserInfo({ ...userInfo, [name]: value });
   };
 
-  const jsonData = { userId, password, nickName, email }; // ! db로 보낼 진짜 정보
-
-  // todo test 이름바꾸기!
-  const data = useSelector((state) => state.join);
-
   // ! 8/21 밥먹고 와서 여기부터 하기! 중복검사... 후.... 모달창 로직도...ㅜㅜㅜㅜ 다시 짜야됨
   // 아이디 중복 검사
   const userIdCheck = () => {
     dispatch(idCheckThunk(userId));
   };
+  // 닉네임 중복 검사
+  const nickNameCheck = () => {
+    dispatch(nickNameCheckThunk(nickName));
+  };
+  // 이메일 중복 검사
+  const emailCheck = () => {
+    dispatch(emailCheckThunk(email));
+  };
+
   // 모달창 로직(기본값이 false, 버튼 클릭시 true로 변경되면서 팝업)
   const [modal, setModal] = useState(false);
+
   const showModal = () => {
     setModal(!modal);
   };
@@ -128,8 +138,6 @@ function InputForm() {
   // 모든 항목을 만족했을 때만 submit!
   const SubmitData = (e) => {
     e.preventDefault();
-    //여기에 유효성검증 및 중복검사를 하지 않았으면 경고창 발생하게 하고 모든걸 만족하면 dispatch하게 해야됨!
-    // 중복검사는 통신을 써야되는구만..
     if (
       isIdValid &&
       isPwValid &&
@@ -137,7 +145,7 @@ function InputForm() {
       isNickNameValid &&
       isEmailValid === true
     ) {
-      dispatch(joinThunk(jsonData)); // ! 여기에 userInfo대신에 jsondata로 넣어주기!
+      dispatch(joinThunk(userId, password, nickName, email));
     } else {
       alert("만족안한 항목이 있나보군요!");
     }
@@ -180,10 +188,6 @@ function InputForm() {
           </Btn>
         </BtnWrapper>
       </StRow>
-      {/* --------- 모달창 ------------- */}
-      {modal ? (
-        <Modal modal={modal} setModal={setModal} ruleDesc={idRuleDesc} />
-      ) : null}
       <StRow>
         <LabelWrapper>
           <Label>
@@ -258,7 +262,15 @@ function InputForm() {
           </Validation>
         </InputWrapper>
         <BtnWrapper visibility="visible">
-          <Btn type="button">중복확인</Btn>
+          <Btn
+            type="button"
+            onClick={() => {
+              nickNameCheck();
+              showModal();
+            }}
+          >
+            중복확인
+          </Btn>
         </BtnWrapper>
       </StRow>
       <StRow>
@@ -284,8 +296,22 @@ function InputForm() {
           </Validation>
         </InputWrapper>
         <BtnWrapper visibility="visible">
-          <Btn type="button">중복확인</Btn>
+          <Btn
+            type="button"
+            onClick={() => {
+              emailCheck();
+              showModal();
+            }}
+          >
+            중복확인
+          </Btn>
         </BtnWrapper>
+        {/* --------- 모달창 ------------- */}
+        {modal ? (
+          <Modal modal={modal} setModal={setModal}>
+            {emailRuleDesc}
+          </Modal>
+        ) : null}
       </StRow>
       <StRow>
         <LabelWrapper>
@@ -323,7 +349,7 @@ function InputForm() {
     </div>
   );
 }
-export default InputForm;
+export default JoinForm;
 
 const StRow = styled.div`
   display: inline-flex;
