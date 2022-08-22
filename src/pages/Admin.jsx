@@ -1,19 +1,18 @@
 import React, { useRef, useCallback, useState } from "react";
 import styled from "styled-components";
 import useInput from "../hooks/useInput";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import S3upload from "react-aws-s3";
 import imageCompression from "browser-image-compression";
 import { postProductAsync } from "../redux/modules/productSlice";
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 const Admin = () => {
-  const [productName, onChangeName, setProductName] = useInput("");
-  // const [productImage, onChangeImage] = useInput("");
-  const [price, onChangePrice, setPrice] = useInput("");
-  const [desc, onChangeDesc, setDesc] = useInput("");
-  const [category, onChangeCategory, setCategory] = useInput("");
-  const [delivery, onChangeDelivery, setDelivery] = useInput("");
+  const [productName, onChangeName] = useInput("");
+  const [price, onChangePrice] = useInput("");
+  const [desc, onChangeDesc] = useInput("");
+  const [category, onChangeCategory] = useInput("");
+  const [delivery, onChangeDelivery] = useInput("");
   const [fileUrl, setFileUrl] = useState(null);
 
   const dispatch = useDispatch();

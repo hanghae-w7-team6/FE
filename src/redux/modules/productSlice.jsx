@@ -15,15 +15,31 @@ export const postProductAsync = createAsyncThunk(
   }
 );
 
+export const getProductAsync = createAsyncThunk(
+  "get/AllProduct",
+  async (thunkAPI) => {
+    try {
+      const res = await instance.get("http://localhost:3001/data");
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
 export const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(postProductAsync.fulfilled, (state, action) => ({
-      ...state,
-      data: action.payload,
-    }));
+    builder
+      .addCase(postProductAsync.fulfilled, (state, action) => ({
+        ...state,
+        data: action.payload,
+      }))
+      .addCase(getProductAsync.fulfilled, (state, action) => {
+        return (state = action.payload);
+      });
   },
 });
 

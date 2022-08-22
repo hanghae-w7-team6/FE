@@ -29,11 +29,6 @@ body {
   background-color: #fff;
 }
 
-body,
-html {
-  height: 200vh;
-}
-
 *,
 :after,
 ::before {
