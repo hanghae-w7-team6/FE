@@ -1,5 +1,8 @@
 :root {
   --swiper-theme-color: #007aff;
+
+  font-family: "Noto Sans", "malgun gothic", AppleGothic, dotum, sans-serif;
+
 }
 html,
 button,
@@ -28,10 +31,7 @@ body {
   background-color: #fff;
 }
 
-body,
-html {
-  height: 100%;
-}
+
 
 *,
 :after,
