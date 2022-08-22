@@ -6,7 +6,7 @@ import { joinThunk, idCheckThunk } from "../../redux/modules/joinSlice";
 import { Btn } from "../../elements/Btn";
 import { Input } from "../../elements/Input";
 import Agreement from "./Agreement";
-import Modal from "../../elements/Modal";
+import Modal from "./modal/Modal";
 
 function InputForm() {
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ function InputForm() {
   // todo test 이름바꾸기!
   const data = useSelector((state) => state.join);
 
+  // ! 8/21 밥먹고 와서 여기부터 하기! 중복검사... 후.... 모달창 로직도...ㅜㅜㅜㅜ 다시 짜야됨
   // 아이디 중복 검사
   const userIdCheck = () => {
     dispatch(idCheckThunk(userId));
@@ -143,7 +144,6 @@ function InputForm() {
   };
   // ! ------------ 여기부터 뷰 -----------------
   return (
-    // <form onSubmit={SubmitData}>
     <div>
       <StRow>
         <LabelWrapper>
@@ -162,6 +162,7 @@ function InputForm() {
             placeholder="아이디를 입력해주세요"
             autoComplete="off"
             onKeyUp={userIdValidation}
+            maxLength="9"
           />
           <Validation>
             <p>{idRuleDesc}</p>
@@ -180,9 +181,9 @@ function InputForm() {
         </BtnWrapper>
       </StRow>
       {/* --------- 모달창 ------------- */}
-      {/* {modal ? (
+      {modal ? (
         <Modal modal={modal} setModal={setModal} ruleDesc={idRuleDesc} />
-      ) : null} */}
+      ) : null}
       <StRow>
         <LabelWrapper>
           <Label>
@@ -200,6 +201,7 @@ function InputForm() {
             placeholder="비밀번호를 입력해주세요"
             autoComplete="off"
             onKeyUp={passwordValidation}
+            maxLength="21"
           />
           <Validation>
             <p>{pwRuleDesc}</p>
@@ -224,6 +226,7 @@ function InputForm() {
             placeholder="비밀번호를 한번 더 입력해주세요"
             autoComplete="off"
             onKeyUp={confirmPwValidation}
+            maxLength="21"
           />
           <Validation>
             <p>{ConfirmPwRuleDesc}</p>
@@ -248,6 +251,7 @@ function InputForm() {
             placeholder="닉네임을 입력해주세요"
             autoComplete="off"
             onKeyUp={nickNameValidation}
+            maxLength="6"
           />
           <Validation>
             <p>{nickNameRuleDesc}</p>
@@ -316,7 +320,6 @@ function InputForm() {
           가입하기
         </Btn>
       </SubmitBtnWrapper>
-      {/* </form> */}
     </div>
   );
 }

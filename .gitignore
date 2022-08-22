@@ -27,3 +27,4 @@ node_modules
 db.json
 useInput.jsx
 README.md
+.env
