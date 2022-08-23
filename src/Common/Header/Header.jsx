@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   HeadTop,
   UserHead,
@@ -20,6 +20,9 @@ import logo from "./logo.svg";
 import HeaderNav from "./HeaderNav/HeaderNav";
 import FixedHeader from "./FixedHeader/FixedHeader";
 import { Link } from "react-router-dom";
+import jwt_Decode from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartAysnc } from "../../redux/modules/cartSlice";
 const Header = () => {
   const [showFixedHeader, setShwoFixedHeader] = useState(false);
 
@@ -35,15 +38,32 @@ const Header = () => {
     };
   }, [showFixedHeader]);
 
+  const loginCheck = localStorage.getItem("token");
+  const userData = jwt_Decode(loginCheck);
+  const dispatch = useDispatch();
+
+  const CartList = useSelector((state) => state.cart.cart);
+  console.log(CartList);
+
+  useEffect(() => {
+    dispatch(getCartAysnc());
+  }, []);
+
   return (
     <>
       <HeadTop>
         <UserHead>
-          <HeadUserLink to="/join">회원가입</HeadUserLink>
-          <HeadeVertical />
-          <HeadUserLink to="/login" style={{ color: "inherit" }}>
-            로그인
-          </HeadUserLink>
+          {!userData ? (
+            <>
+              <HeadUserLink to="/join">회원가입</HeadUserLink>
+              <HeadeVertical />
+              <HeadUserLink to="/login" style={{ color: "inherit" }}>
+                로그인
+              </HeadUserLink>
+            </>
+          ) : (
+            <HeadUserLink to="/">{userData.nickName}님</HeadUserLink>
+          )}
           <HeadeVertical />
           <ServiceCenter>
             <HeadUserLink to="/" style={{ color: "inherit" }}>
@@ -59,7 +79,7 @@ const Header = () => {
           </ServiceCenter>
         </UserHead>
         <HeadMain>
-          <HeadLeft>
+          <HeadLeft to="/">
             <img src={logo} alt="마켓컬리 로고" />
             <LogoButton>마켓컬리</LogoButton>
           </HeadLeft>
@@ -75,9 +95,7 @@ const Header = () => {
               <button aria-label="찜하기" type="button"></button>
               <CartIconWrap>
                 <Link to="/cart">
-                  <button>
-                    <span>1</span>
-                  </button>
+                  <button>{CartList && <span>{CartList.length}</span>}</button>
                 </Link>
               </CartIconWrap>
             </HeadRightContents>
@@ -85,7 +103,7 @@ const Header = () => {
         </HeadMain>
       </HeadTop>
       <HeaderNav />
-      {showFixedHeader && <FixedHeader />}
+      {showFixedHeader && <FixedHeader CartList={CartList} />}
     </>
   );
 };

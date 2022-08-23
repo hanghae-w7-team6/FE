@@ -2,12 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import Layouts from "../Common/Layout";
 import Header from "../Common/Header/Header";
-import CartList from "../components/CartList/CartList";
+import { useSelector } from "react-redux";
+
 
 const Cart = () => {
+  const CartList = useSelector((state) => state.cart.cart);
+  console.log(CartList);
+
   return (
     <>
-      <Header />
+      <Header CartList={CartList} />
       <Layouts>
         <JustCart>
           <h2>장바구니</h2>

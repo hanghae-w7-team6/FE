@@ -25,6 +25,7 @@ function LoginForm() {
   };
   const loginCheck = localStorage.getItem("token");
   console.log(loginCheck);
+
   useEffect(() => {
     if (loginCheck) {
       nav("/");
