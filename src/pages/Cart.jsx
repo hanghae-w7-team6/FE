@@ -191,6 +191,8 @@ const CartStatusWrap = styled.div`
 
 const SearchLocation = styled.div`
   padding: 23px 19px 20px;
+  border: 1px solid #f2f2f2;
+  border-bottom: 0;
 
   button {
     width: 100%;
@@ -237,6 +239,8 @@ const SearchLocation = styled.div`
 
 const TotalPrice = styled.div`
   padding: 19px 18px 18px 20px;
+  border: 1px solid #f2f2f2;
+  background-color: #fafafa;
 `;
 const PriceWrap = styled.div`
   display: flex;
