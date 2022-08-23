@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   joinThunk,
   idCheckThunk,
-  nickNameCheckThunk,
   emailCheckThunk,
 } from "../../redux/modules/joinSlice";
+import { useNavigate } from "react-router-dom";
 
 import { Btn } from "../../elements/Btn";
 import { Input } from "../../elements/Input";
@@ -15,7 +15,7 @@ import Modal from "./modal/Modal";
 
 function JoinForm() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   // input을 통해 들어오는 유저 정보
   const [userInfo, setUserInfo] = useState({
     userId: "",
@@ -23,35 +23,29 @@ function JoinForm() {
     confirmPw: "",
     nickName: "",
     email: "",
+    address: "",
   });
 
-  const { userId, password, confirmPw, nickName, email } = userInfo;
+  const { userId, password, confirmPw, nickName, email, address } = userInfo;
   const handleInput = (e) => {
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
   };
-
-  // ! 8/21 밥먹고 와서 여기부터 하기! 중복검사... 후.... 모달창 로직도...ㅜㅜㅜㅜ 다시 짜야됨
-  // 아이디 중복 검사
-  const userIdCheck = () => {
-    dispatch(idCheckThunk(userId));
+  // 모든 항목을 만족했을 때만 submit!
+  const SubmitData = (e) => {
+    e.preventDefault();
+    if (
+      isIdValid &&
+      isPwValid &&
+      isConfirmPwValid &&
+      isNickNameValid &&
+      isEmailValid === true
+    ) {
+      dispatch(joinThunk({ userId, nickName, password, email }));
+    } else {
+      alert("만족안한 항목이 있나보군요!");
+    }
   };
-  // 닉네임 중복 검사
-  const nickNameCheck = () => {
-    dispatch(nickNameCheckThunk(nickName));
-  };
-  // 이메일 중복 검사
-  const emailCheck = () => {
-    dispatch(emailCheckThunk(email));
-  };
-
-  // 모달창 로직(기본값이 false, 버튼 클릭시 true로 변경되면서 팝업)
-  const [modal, setModal] = useState(false);
-
-  const showModal = () => {
-    setModal(!modal);
-  };
-
   // ! ------------ 여기부터 유효성 검사 로직 -----------------
   // todo 1. 유효성 검사(아이디, 이메일, 닉네임, 패스워드)
   // todo 2. 유효하지 않은 문자는 애초부터 차단하기?
@@ -131,25 +125,26 @@ function JoinForm() {
       setEmailRuleDesc("이메일 형식으로 입력해 주세요.");
     }
   };
+
   // todo 중복 체크(아이디, 이메일, 닉네임)
+  // ! 8/21 밥먹고 와서 여기부터 하기! 중복검사... 후.... 모달창 로직도...ㅜㅜㅜㅜ 다시 짜야됨
+  // 아이디 중복 검사
+  const userIdCheck = () => {
+    dispatch(idCheckThunk(userId));
+  };
+  // 이메일 중복 검사
+  const emailCheck = () => {
+    dispatch(emailCheckThunk({ email }));
+  };
+
+  // 모달창 로직(기본값이 false, 버튼 클릭시 true로 변경되면서 팝업)
+  const [modal, setModal] = useState(false);
+
+  const showModal = () => {
+    setModal(!modal);
+  };
 
   // todo 카카오주소검색 api....
-
-  // 모든 항목을 만족했을 때만 submit!
-  const SubmitData = (e) => {
-    e.preventDefault();
-    if (
-      isIdValid &&
-      isPwValid &&
-      isConfirmPwValid &&
-      isNickNameValid &&
-      isEmailValid === true
-    ) {
-      dispatch(joinThunk(userId, password, nickName, email));
-    } else {
-      alert("만족안한 항목이 있나보군요!");
-    }
-  };
   // ! ------------ 여기부터 뷰 -----------------
   return (
     <div>
@@ -181,7 +176,7 @@ function JoinForm() {
             type="button"
             onClick={() => {
               userIdCheck();
-              showModal();
+              // showModal();
             }}
           >
             중복확인
@@ -261,17 +256,7 @@ function JoinForm() {
             <p>{nickNameRuleDesc}</p>
           </Validation>
         </InputWrapper>
-        <BtnWrapper visibility="visible">
-          <Btn
-            type="button"
-            onClick={() => {
-              nickNameCheck();
-              showModal();
-            }}
-          >
-            중복확인
-          </Btn>
-        </BtnWrapper>
+        <BtnWrapper />
       </StRow>
       <StRow>
         <LabelWrapper>
@@ -299,8 +284,8 @@ function JoinForm() {
           <Btn
             type="button"
             onClick={() => {
-              emailCheck();
-              showModal();
+              // emailCheck();
+              // showModal();
             }}
           >
             중복확인
