@@ -39,9 +39,9 @@ const Header = () => {
     <>
       <HeadTop>
         <UserHead>
-          <HeadUserLink to="/">회원가입</HeadUserLink>
+          <HeadUserLink to="/join">회원가입</HeadUserLink>
           <HeadeVertical />
-          <HeadUserLink to="/" style={{ color: "inherit" }}>
+          <HeadUserLink to="/login" style={{ color: "inherit" }}>
             로그인
           </HeadUserLink>
           <HeadeVertical />
