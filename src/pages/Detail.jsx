@@ -101,7 +101,7 @@ const DetailImg = styled.img`
   width: 430px;
   height: 552px;
   /* background: url({detail.productImage}); */
-  background-size: cover;
+  object-fit: cover;
 `;
 
 const DetailInfo = styled.div`

@@ -4,6 +4,7 @@ import Layouts from "../Common/Layout";
 import Header from "../Common/Header/Header";
 import { useSelector } from "react-redux";
 
+
 const Cart = () => {
   const CartList = useSelector((state) => state.cart.cart);
   console.log(CartList);
@@ -30,7 +31,7 @@ const Cart = () => {
               </ButtonWrap>
             </SelectNav>
             <CartContainer>
-              <div>상품이 들어갈 자리 </div>
+              <CartList></CartList>
             </CartContainer>
             <SelectNav>
               <ButtonWrap>
