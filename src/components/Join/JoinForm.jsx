@@ -1,22 +1,30 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   joinThunk,
   idCheckThunk,
   emailCheckThunk,
 } from "../../redux/modules/joinSlice";
-import { useNavigate } from "react-router-dom";
 
 import { Btn } from "../../elements/Btn";
 import { Input } from "../../elements/Input";
+import {
+  StRow,
+  LabelWrapper,
+  InputWrapper,
+  BtnWrapper,
+  Validation,
+  SubmitBtnWrapper,
+} from "./StyleJoinForm";
 import Agreement from "./Agreement";
 import Modal from "./modal/Modal";
 
 function JoinForm() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  // input을 통해 들어오는 유저 정보
+  const nav = useNavigate();
+
   const [userInfo, setUserInfo] = useState({
     userId: "",
     password: "",
@@ -46,9 +54,8 @@ function JoinForm() {
       alert("만족안한 항목이 있나보군요!");
     }
   };
+
   // ! ------------ 여기부터 유효성 검사 로직 -----------------
-  // todo 1. 유효성 검사(아이디, 이메일, 닉네임, 패스워드)
-  // todo 2. 유효하지 않은 문자는 애초부터 차단하기?
   // 유효성 검사 룰
   const userIdRegEx = /^[a-zA-Z0-9]{4,8}$/; // ID >> 숫자 및 알파벳만 가능(4~8글자)
   const passwordRegEx = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/; // Password >> 6~20글자 , 최소 1개 이상의 숫자 또는 특수문자 포함
@@ -125,16 +132,22 @@ function JoinForm() {
       setEmailRuleDesc("이메일 형식으로 입력해 주세요.");
     }
   };
-
-  // todo 중복 체크(아이디, 이메일, 닉네임)
-  // ! 8/21 밥먹고 와서 여기부터 하기! 중복검사... 후.... 모달창 로직도...ㅜㅜㅜㅜ 다시 짜야됨
-  // 아이디 중복 검사
+  // ! ------------ 여기부터 중복 확인 로직 -----------------
+  // 아이디 중복 확인 함수
   const userIdCheck = () => {
-    dispatch(idCheckThunk(userId));
+    if (isIdValid) {
+      dispatch(idCheckThunk(userId));
+    } else {
+      alert(idRuleDesc);
+    }
   };
-  // 이메일 중복 검사
+  // 이메일 중복 확인 함수
   const emailCheck = () => {
-    dispatch(emailCheckThunk({ email }));
+    if (isEmailValid) {
+      dispatch(emailCheckThunk(email));
+    } else {
+      alert(emailRuleDesc);
+    }
   };
 
   // 모달창 로직(기본값이 false, 버튼 클릭시 true로 변경되면서 팝업)
@@ -150,12 +163,11 @@ function JoinForm() {
     <div>
       <StRow>
         <LabelWrapper>
-          <Label>
+          <label>
             아이디
-            <MandatoryMark>*</MandatoryMark>
-          </Label>
+            <span>*</span>
+          </label>
         </LabelWrapper>
-
         <InputWrapper>
           <Input
             type="text"
@@ -176,7 +188,6 @@ function JoinForm() {
             type="button"
             onClick={() => {
               userIdCheck();
-              // showModal();
             }}
           >
             중복확인
@@ -185,10 +196,10 @@ function JoinForm() {
       </StRow>
       <StRow>
         <LabelWrapper>
-          <Label>
+          <label>
             비밀번호
-            <MandatoryMark>*</MandatoryMark>
-          </Label>
+            <span>*</span>
+          </label>
         </LabelWrapper>
 
         <InputWrapper>
@@ -210,10 +221,10 @@ function JoinForm() {
       </StRow>
       <StRow>
         <LabelWrapper>
-          <Label>
+          <label>
             비밀번호확인
-            <MandatoryMark>*</MandatoryMark>
-          </Label>
+            <span>*</span>
+          </label>
         </LabelWrapper>
 
         <InputWrapper>
@@ -235,10 +246,10 @@ function JoinForm() {
       </StRow>
       <StRow>
         <LabelWrapper>
-          <Label>
+          <label>
             닉네임
-            <MandatoryMark>*</MandatoryMark>
-          </Label>
+            <span>*</span>
+          </label>
         </LabelWrapper>
 
         <InputWrapper>
@@ -260,10 +271,10 @@ function JoinForm() {
       </StRow>
       <StRow>
         <LabelWrapper>
-          <Label>
+          <label>
             이메일
-            <MandatoryMark>*</MandatoryMark>
-          </Label>
+            <span>*</span>
+          </label>
         </LabelWrapper>
 
         <InputWrapper>
@@ -284,27 +295,26 @@ function JoinForm() {
           <Btn
             type="button"
             onClick={() => {
-              // emailCheck();
-              // showModal();
+              emailCheck();
             }}
           >
             중복확인
           </Btn>
         </BtnWrapper>
         {/* --------- 모달창 ------------- */}
-        {modal ? (
+        {/* {modal ? (
           <Modal modal={modal} setModal={setModal}>
             {emailRuleDesc}
           </Modal>
-        ) : null}
+        ) : null} */}
       </StRow>
       <StRow>
         <LabelWrapper>
-          <Label>주소</Label>
+          <label>주소</label>
         </LabelWrapper>
         <InputWrapper>
           <Btn width="100%" fontSize="14px" fontWeight="500" type="button">
-            <BtnImg
+            <SearchImg
               src="https://res.kurly.com/pc/service/cart/2007/ico_search.svg"
               alt="돋보기"
             />
@@ -335,67 +345,12 @@ function JoinForm() {
   );
 }
 export default JoinForm;
-
-const StRow = styled.div`
-  display: inline-flex;
-  width: 100%;
-  padding: 10px 20px;
-`;
-
-const LabelWrapper = styled.div`
-  display: block;
-  width: 139px;
-  padding-top: 12px;
-`;
-const Label = styled.label`
-  color: rgb(51, 51, 51);
-  font-size: 12px;
-  line-height: 20px;
-`;
-const MandatoryMark = styled.span`
-  color: #ee6a7b;
-`;
-
-const InputWrapper = styled.div`
-  flex: 1 1 0%;
-  position: relative;
-`;
-
-const BtnWrapper = styled.div`
-  width: 120px;
-  margin-left: 8px;
-  visibility: ${(props) => props.visibility || "hidden"};
-`;
-
-const Validation = styled.div`
-  padding: 10px 0;
-  & p {
-    font-size: ${(props) => props.fontSize || "13px"};
-    color: ${(props) => props.color || " rgb(240, 63, 64)"};
-    margin-top: -4px;
-  }
-
-  & span {
-    display: block;
-    /* margin-top: 10px; */
-    font-size: 12px;
-    line-height: 18px;
-    color: rgb(102, 102, 102);
-  }
-`;
-const SubmitBtnWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  border-top: 1px solid rgb(247, 247, 247);
-  padding: 40px 0px;
-`;
-
 const Line = styled.div`
   padding: 10px 0px;
   border-bottom: 1px solid rgb(51, 51, 51);
 `;
 
-const BtnImg = styled.img`
+const SearchImg = styled.img`
   display: inline-block;
   width: 20px;
   height: 20px;
