@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Layouts from "../Common/Layout";
 import Header from "../Common/Header/Header";
+import CartList from "../components/CartList/CartList";
 
 const Cart = () => {
   return (
@@ -26,7 +27,7 @@ const Cart = () => {
               </ButtonWrap>
             </SelectNav>
             <CartContainer>
-              <div>상품이 들어갈 자리 </div>
+              <CartList></CartList>
             </CartContainer>
             <SelectNav>
               <ButtonWrap>
