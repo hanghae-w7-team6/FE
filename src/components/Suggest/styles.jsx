@@ -30,6 +30,7 @@ export const SuggestHead = styled.div`
     line-height: 1.15;
     letter-spacing: -0.26px;
     font-weight: 500;
+    text-align: center;
   }
 `;
 
@@ -52,6 +53,7 @@ export const NextButton = styled.button`
   top: calc(50% - 50px);
   right: 0px;
   transform: translate(50%, -50%) rotate(180deg);
+  cursor: pointer;
 `;
 
 export const PrevButton = styled.button`
@@ -67,4 +69,5 @@ export const PrevButton = styled.button`
   top: calc(50% - 50px);
   left: 0px;
   transform: translate(-50%, -50%);
+  cursor: pointer;
 `;

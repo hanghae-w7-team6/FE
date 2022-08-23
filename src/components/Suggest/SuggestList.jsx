@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 const SuggestList = ({ item }) => {
-  console.log("suggestList:", item);
+  // console.log("suggestList:", item);
   return (
     <>
       <Wrapper to={`/detail/${item.productId}`}>
@@ -24,7 +24,7 @@ const SuggestList = ({ item }) => {
           <ListFooter>
             <PriceBox>
               <PirceDC>5%</PirceDC>
-              <span>{item.price * 0.95}원</span>
+              <span>{Math.floor(item.price * 0.95)}원</span>
             </PriceBox>
           </ListFooter>
           <RealPrice>{item.price}</RealPrice>
@@ -36,7 +36,7 @@ const SuggestList = ({ item }) => {
 
 export default SuggestList;
 
-const Wrapper = styled(Link)`
+export const Wrapper = styled(Link)`
   margin-left: 6px;
   flex-shrink: 0;
   width: 264.75px;
@@ -47,12 +47,12 @@ const Wrapper = styled(Link)`
   color: inherit;
 `;
 
-const ListBox = styled.div`
+export const ListBox = styled.div`
   color: rgb(51, 51, 51);
   cursor: pointer;
   width: 249px;
 `;
-const ListImageBox = styled.div`
+export const ListImageBox = styled.div`
   overflow: hidden;
   position: relative;
   background-color: rgb(245, 245, 245);
@@ -65,7 +65,7 @@ const ListImageBox = styled.div`
   }
 `;
 
-const CartButton = styled.button`
+export const CartButton = styled.button`
   position: absolute;
   right: 16px;
   bottom: 16px;
@@ -77,7 +77,7 @@ const CartButton = styled.button`
   }
 `;
 
-const ListTitleBox = styled.div`
+export const ListTitleBox = styled.div`
   position: relative;
   padding: 14px 10px 0px 0px;
   & h3 {
@@ -96,7 +96,7 @@ const ListTitleBox = styled.div`
   }
 `;
 
-const ListFooter = styled.div`
+export const ListFooter = styled.div`
   display: flex;
   -webkit-box-pack: justify;
   justify-content: space-between;
@@ -104,7 +104,7 @@ const ListFooter = styled.div`
   align-items: center;
 `;
 
-const PriceBox = styled.div`
+export const PriceBox = styled.div`
   display: flex;
   flex-direction: row;
 
@@ -116,7 +116,7 @@ const PriceBox = styled.div`
   }
 `;
 
-const PirceDC = styled.span`
+export const PirceDC = styled.span`
   color: rgb(250, 98, 47);
   font-size: 16px;
   font-weight: 800;
@@ -125,7 +125,7 @@ const PirceDC = styled.span`
   margin-right: 7px;
 `;
 
-const RealPrice = styled.span`
+export const RealPrice = styled.span`
   color: rgb(181, 181, 181);
   font-size: 14px;
   font-weight: 400;

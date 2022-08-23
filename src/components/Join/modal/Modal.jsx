@@ -9,7 +9,10 @@ function Modal(props) {
         <div className="modalContent">
           <div className="modalTitle">{props.children}</div>
           <div className="modalFooter">
-            <button type="button" onClick={() => props.setModal(!props.modal)}>
+            <button
+              type="button"
+              onClick={() => props.setModal((prev) => !prev)}
+            >
               확인
             </button>
           </div>
