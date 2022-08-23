@@ -2,18 +2,20 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCartAysnc } from "../../redux/modules/cartSlice";
 import styled from "styled-components";
-import Carts from "./Carts";
+import CartMap from "./CartMap";
 
 const CartItems = () => {
-  const cartData = useSelector((state) => state);
-  console.log(cartData);
+  const cartData = useSelector((state) => state.cart.cart);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCartAysnc());
   }, [dispatch]);
   return (
     <ListWrap>
-      <Carts></Carts>
+      {cartData?.map((list) => {
+        return <CartMap list={list}></CartMap>;
+      })}
     </ListWrap>
   );
 };

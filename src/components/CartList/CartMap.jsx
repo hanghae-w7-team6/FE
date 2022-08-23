@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
-const Carts = ({ carts }) => {
+const CartMap = ({ list }) => {
   const [count, setCount] = useState(0);
+
   return (
     <CartLine>
       <CheckButton src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTExNjIgLTEwOTApIHRyYW5zbGF0ZSgxMDAgOTM2KSB0cmFuc2xhdGUoMTA0NiAxNDIpIHRyYW5zbGF0ZSgxNiAxMikiPgogICAgICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMS41IiBmaWxsPSIjRjJGMkYyIiBzdHJva2U9IiNFMkUyRTIiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggc3Ryb2tlPSIjREREIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNNyAxMi42NjdMMTAuMzg1IDE2IDE4IDguNSIvPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" />
-      <Img src=""></Img>
-      <Title>테스트 테스트 야야야</Title>
+      <Img src={list.productImage}></Img>
+      <Title>{list.productName}</Title>
       <ButtonWrap>
-        <Minus
-          onClick={() => {
-            setCount(count - 1);
-          }}
-        ></Minus>
+        {count > 0 ? (
+          <Minus
+            onClick={() => {
+              setCount(count - 1);
+            }}
+          ></Minus>
+        ) : (
+          <Minus
+            disabled={true}
+            onClick={() => {
+              setCount(count - 1);
+            }}
+          ></Minus>
+        )}
+
         <Number>{count}</Number>
         <Plus
           onClick={() => {
@@ -23,8 +33,8 @@ const Carts = ({ carts }) => {
         ></Plus>
       </ButtonWrap>
       <CostWrap>
-        <SaleCost>950원</SaleCost>
-        <PrimeCost>1000원</PrimeCost>
+        <SaleCost>{count * list.price * 0.95}</SaleCost>
+        <PrimeCost>{count * list.price}</PrimeCost>
       </CostWrap>
       <DeleteButton>
         <span></span>
@@ -32,13 +42,15 @@ const Carts = ({ carts }) => {
     </CartLine>
   );
 };
-export default Carts;
+export default CartMap;
 
-const CartLine = styled.ul`
-  height: 78px;
-  padding: 20px 0;
+const CartLine = styled.li`
   display: flex;
+  -webkit-box-align: center;
   align-items: center;
+  position: relative;
+  padding: 20px 0px;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.1);
 `;
 
 const CheckButton = styled.img`
@@ -49,6 +61,7 @@ const Img = styled.img`
   width: 60px;
   height: 78px;
   margin-right: 20px;
+  object-fit: cover;
 `;
 
 const Title = styled.p`
@@ -79,6 +92,9 @@ const Minus = styled.button`
   background-color: transparent;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAzMCAzMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0yMCAxNHYySDEwdi0yeiIgZmlsbD0iIzMzMyIgZmlsbC1ydWxlPSJub256ZXJvIi8+Cjwvc3ZnPgo=);
   vertical-align: top;
+  :disabled {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAzMCAzMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0yMCAxNHYySDEwdi0yeiIgZmlsbD0iI0RERCIgZmlsbC1ydWxlPSJub256ZXJvIi8+Cjwvc3ZnPgo=);
+  }
 `;
 
 const Number = styled.div`
