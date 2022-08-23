@@ -1,19 +1,23 @@
 import React from "react";
 import styled from "styled-components";
+import Header from "../Common/Header/Header";
 import Layouts from "../Common/Layout";
 import JoinForm from "../components/Join/JoinForm";
 
 function Join() {
   return (
-    <Layouts>
-      <JoinTitle>회원가입</JoinTitle>
-      <JoinBody>
-        <RequirementInfo>
-          <span>*</span> 필수입력사항
-        </RequirementInfo>
-        <JoinForm></JoinForm>
-      </JoinBody>
-    </Layouts>
+    <>
+      <Header />
+      <Layouts>
+        <JoinTitle>회원가입</JoinTitle>
+        <JoinBody>
+          <RequirementInfo>
+            <span>*</span> 필수입력사항
+          </RequirementInfo>
+          <JoinForm></JoinForm>
+        </JoinBody>
+      </Layouts>
+    </>
   );
 }
 

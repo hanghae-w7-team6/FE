@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { loginThunk } from "../../redux/modules/loginSlice";
 import useInput from "../../hooks/useInput";
 
@@ -9,14 +10,27 @@ import { Btn } from "../../elements/Btn";
 
 function LoginForm() {
   const nav = useNavigate();
+  const dispatch = useDispatch();
+
   const [userId, onIdHandler] = useInput("");
   const [password, onPasswordHandler] = useInput("");
-  console.log(userId, password);
 
   const submitHandler = (e) => {
-    e.preventDefault();
+    if (userId === "" || password === "") {
+      alert("아이디 혹은 비밀번호를 입력해주세요");
+      return;
+    }
+    dispatch(loginThunk({ userId, password }));
     //  ! 아이디 + 비밀번호를 모두 입력해야 서브밋 아니면 "아이디 혹은 비밀번호를 입력해주세요" 출력
   };
+  const loginCheck = localStorage.getItem("token");
+  console.log(loginCheck);
+  useEffect(() => {
+    if (loginCheck) {
+      nav("/");
+    }
+  }, [loginCheck]);
+
   return (
     <Container>
       <Title>로그인</Title>
