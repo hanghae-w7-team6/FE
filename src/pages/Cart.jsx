@@ -1,102 +1,106 @@
 import React from "react";
 import styled from "styled-components";
 import Layouts from "../Common/Layout";
+import Header from "../Common/Header/Header";
 
 const Cart = () => {
   return (
-    <Layouts>
-      <JustCart>
-        <h2>장바구니</h2>
-      </JustCart>
-      <CartWrap>
-        <LeftSide>
-          <SelectNav>
-            <ButtonWrap>
-              <Label>
-                <input type="checkbox"></input>
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTExNjIgLTEwOTApIHRyYW5zbGF0ZSgxMDAgOTM2KSB0cmFuc2xhdGUoMTA0NiAxNDIpIHRyYW5zbGF0ZSgxNiAxMikiPgogICAgICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMS41IiBmaWxsPSIjRjJGMkYyIiBzdHJva2U9IiNFMkUyRTIiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggc3Ryb2tlPSIjREREIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNNyAxMi42NjdMMTAuMzg1IDE2IDE4IDguNSIvPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" />
-                {/* <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE3Ni4wMDAwMDAsIC0xMDkwLjAwMDAwMCkgdHJhbnNsYXRlKDEwMC4wMDAwMDAsIDkzNi4wMDAwMDApIHRyYW5zbGF0ZSg2MC4wMDAwMDAsIDE0Mi4wMDAwMDApIHRyYW5zbGF0ZSgxNi4wMDAwMDAsIDEyLjAwMDAwMCkiPgogICAgICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMiIgZmlsbD0iIzVGMDA4MCIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBzdHJva2U9IiNGRkYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjUiIGQ9Ik03IDEyLjY2N0wxMC4zODUgMTYgMTggOC41Ii8+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K"/> */}
-                전체선택 (0/2)
-              </Label>
-              <span></span>
-              <button>선택삭제</button>
-            </ButtonWrap>
-          </SelectNav>
-          <CartContainer>
-            <div>상품이 들어갈 자리 </div>
-          </CartContainer>
-          <SelectNav>
-            <ButtonWrap>
-              <Label>
-                <input type="checkbox"></input>
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTExNjIgLTEwOTApIHRyYW5zbGF0ZSgxMDAgOTM2KSB0cmFuc2xhdGUoMTA0NiAxNDIpIHRyYW5zbGF0ZSgxNiAxMikiPgogICAgICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMS41IiBmaWxsPSIjRjJGMkYyIiBzdHJva2U9IiNFMkUyRTIiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggc3Ryb2tlPSIjREREIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNNyAxMi42NjdMMTAuMzg1IDE2IDE4IDguNSIvPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" />
-                {/* <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE3Ni4wMDAwMDAsIC0xMDkwLjAwMDAwMCkgdHJhbnNsYXRlKDEwMC4wMDAwMDAsIDkzNi4wMDAwMDApIHRyYW5zbGF0ZSg2MC4wMDAwMDAsIDE0Mi4wMDAwMDApIHRyYW5zbGF0ZSgxNi4wMDAwMDAsIDEyLjAwMDAwMCkiPgogICAgICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMiIgZmlsbD0iIzVGMDA4MCIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBzdHJva2U9IiNGRkYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjUiIGQ9Ik03IDEyLjY2N0wxMC4zODUgMTYgMTggOC41Ii8+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K"/> */}
-                전체선택 (0/2)
-              </Label>
-              <span></span>
-              <button>선택삭제</button>
-            </ButtonWrap>
-          </SelectNav>
-        </LeftSide>
-        <RightSide>
-          <CartStatusWrap>
-            <SearchLocation>
-              <h3>배송지</h3>
-              <div>
-                <p>
-                  <span>배송지를 등록</span>하고
-                  <br />
-                  구매 가능한 상품을 확인하세요!
-                </p>
-              </div>
-              <button>
-                <span>
-                  <img src="https://res.kurly.com/pc/service/cart/2007/ico_search.svg" />
-                  주소 확인
-                </span>
-              </button>
-            </SearchLocation>
-            <TotalPrice>
-              <PriceWrap>
-                <span>상품금액</span>
-                <span style={{ fontSize: "18px" }}>
-                  0<span style={{ fontSize: "14px" }}> 원</span>
-                </span>
-              </PriceWrap>
-              <PriceWrap style={{ paddingTop: "12px" }}>
-                <span>상품할인 금액</span>
-                <span style={{ fontSize: "18px" }}>
-                  0<span style={{ fontSize: "14px" }}> 원</span>
-                </span>
-              </PriceWrap>
-              <PriceWrap style={{ paddingTop: "12px" }}>
-                <span>배송비</span>
-                <span style={{ fontSize: "18px" }}>
-                  +3,000<span style={{ fontSize: "14px" }}> 원</span>
-                </span>
-              </PriceWrap>
-              <FreeDelivery>
-                <span></span>원 추가주문 시,
-                <span>무료배송</span>
-              </FreeDelivery>
-              <PriceWrap style={{ paddingTop: "12px" }}>
-                <span>결제예정금액</span>
-                <span style={{ fontSize: "20px" }}>
-                  0<span style={{ fontSize: "14px" }}> 원</span>
-                </span>
-              </PriceWrap>
-              <Text>
-                <span>적립</span>
-                로그인 후 회원 등급에 따라 적립
-              </Text>
-            </TotalPrice>
-            <Done>
-              <button>주문하기</button>
-            </Done>
-          </CartStatusWrap>
-        </RightSide>
-      </CartWrap>
-    </Layouts>
+    <>
+      <Header />
+      <Layouts>
+        <JustCart>
+          <h2>장바구니</h2>
+        </JustCart>
+        <CartWrap>
+          <LeftSide>
+            <SelectNav>
+              <ButtonWrap>
+                <Label>
+                  <input type="checkbox"></input>
+                  <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTExNjIgLTEwOTApIHRyYW5zbGF0ZSgxMDAgOTM2KSB0cmFuc2xhdGUoMTA0NiAxNDIpIHRyYW5zbGF0ZSgxNiAxMikiPgogICAgICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMS41IiBmaWxsPSIjRjJGMkYyIiBzdHJva2U9IiNFMkUyRTIiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggc3Ryb2tlPSIjREREIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNNyAxMi42NjdMMTAuMzg1IDE2IDE4IDguNSIvPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" />
+                  {/* <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE3Ni4wMDAwMDAsIC0xMDkwLjAwMDAwMCkgdHJhbnNsYXRlKDEwMC4wMDAwMDAsIDkzNi4wMDAwMDApIHRyYW5zbGF0ZSg2MC4wMDAwMDAsIDE0Mi4wMDAwMDApIHRyYW5zbGF0ZSgxNi4wMDAwMDAsIDEyLjAwMDAwMCkiPgogICAgICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMiIgZmlsbD0iIzVGMDA4MCIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBzdHJva2U9IiNGRkYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjUiIGQ9Ik03IDEyLjY2N0wxMC4zODUgMTYgMTggOC41Ii8+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K"/> */}
+                  전체선택 (0/2)
+                </Label>
+                <span></span>
+                <button>선택삭제</button>
+              </ButtonWrap>
+            </SelectNav>
+            <CartContainer>
+              <div>상품이 들어갈 자리 </div>
+            </CartContainer>
+            <SelectNav>
+              <ButtonWrap>
+                <Label>
+                  <input type="checkbox"></input>
+                  {/* <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTExNjIgLTEwOTApIHRyYW5zbGF0ZSgxMDAgOTM2KSB0cmFuc2xhdGUoMTA0NiAxNDIpIHRyYW5zbGF0ZSgxNiAxMikiPgogICAgICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMS41IiBmaWxsPSIjRjJGMkYyIiBzdHJva2U9IiNFMkUyRTIiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggc3Ryb2tlPSIjREREIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNNyAxMi42NjdMMTAuMzg1IDE2IDE4IDguNSIvPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" /> */}
+                  <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE3Ni4wMDAwMDAsIC0xMDkwLjAwMDAwMCkgdHJhbnNsYXRlKDEwMC4wMDAwMDAsIDkzNi4wMDAwMDApIHRyYW5zbGF0ZSg2MC4wMDAwMDAsIDE0Mi4wMDAwMDApIHRyYW5zbGF0ZSgxNi4wMDAwMDAsIDEyLjAwMDAwMCkiPgogICAgICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMiIgZmlsbD0iIzVGMDA4MCIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBzdHJva2U9IiNGRkYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjUiIGQ9Ik03IDEyLjY2N0wxMC4zODUgMTYgMTggOC41Ii8+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K" />
+                  전체선택 (0/2)
+                </Label>
+                <span></span>
+                <button>선택삭제</button>
+              </ButtonWrap>
+            </SelectNav>
+          </LeftSide>
+          <RightSide>
+            <CartStatusWrap>
+              <SearchLocation>
+                <h3>배송지</h3>
+                <div>
+                  <p>
+                    <span>배송지를 등록</span>하고
+                    <br />
+                    구매 가능한 상품을 확인하세요!
+                  </p>
+                </div>
+                <button>
+                  <span>
+                    <img src="https://res.kurly.com/pc/service/cart/2007/ico_search.svg" />
+                    주소 확인
+                  </span>
+                </button>
+              </SearchLocation>
+              <TotalPrice>
+                <PriceWrap>
+                  <span>상품금액</span>
+                  <span style={{ fontSize: "18px" }}>
+                    0<span style={{ fontSize: "14px" }}> 원</span>
+                  </span>
+                </PriceWrap>
+                <PriceWrap style={{ paddingTop: "12px" }}>
+                  <span>상품할인 금액</span>
+                  <span style={{ fontSize: "18px" }}>
+                    0<span style={{ fontSize: "14px" }}> 원</span>
+                  </span>
+                </PriceWrap>
+                <PriceWrap style={{ paddingTop: "12px" }}>
+                  <span>배송비</span>
+                  <span style={{ fontSize: "18px" }}>
+                    +3,000<span style={{ fontSize: "14px" }}> 원</span>
+                  </span>
+                </PriceWrap>
+                <FreeDelivery>
+                  <span></span>원 추가주문 시,
+                  <span>무료배송</span>
+                </FreeDelivery>
+                <PriceWrap style={{ paddingTop: "12px" }}>
+                  <span>결제예정금액</span>
+                  <span style={{ fontSize: "20px" }}>
+                    0<span style={{ fontSize: "14px" }}> 원</span>
+                  </span>
+                </PriceWrap>
+                <Text>
+                  <span>적립</span>
+                  로그인 후 회원 등급에 따라 적립
+                </Text>
+              </TotalPrice>
+              <Done>
+                <button>주문하기</button>
+              </Done>
+            </CartStatusWrap>
+          </RightSide>
+        </CartWrap>
+      </Layouts>
+    </>
   );
 };
 
@@ -118,7 +122,6 @@ const JustCart = styled.div`
 const CartWrap = styled.div`
   display: flex;
   flex-direction: row;
-  border: 1px solid black;
   width: 100%;
   min-height: 942px;
   max-height: 100%;
@@ -126,24 +129,20 @@ const CartWrap = styled.div`
 `;
 
 const LeftSide = styled.div`
-  border: 1px solid blue;
   width: 742px;
 `;
 
 const CartContainer = styled.div`
-  border: 1px solid blue;
   height: auto;
 `;
 
 const SelectNav = styled.div`
-  border: 1px solid green;
   padding: 18px 10px 16px 2px;
   height: 60px;
 `;
 
 const ButtonWrap = styled.div`
   height: 26px;
-  border: 1px solid black;
   display: flex;
 
   span {
@@ -179,20 +178,17 @@ const Label = styled.label`
 `;
 
 const RightSide = styled.div`
-  border: 1px solid brown;
   width: 284px;
   letter-spacing: -0.5px;
 `;
 
 const CartStatusWrap = styled.div`
-  border: 1px solid #f2f2f2;
   position: sticky;
   height: auto;
 `;
 
 const SearchLocation = styled.div`
   padding: 23px 19px 20px;
-  border: 1px solid #f2f2f2;
 
   button {
     width: 100%;
@@ -242,7 +238,6 @@ const SearchLocation = styled.div`
 
 const TotalPrice = styled.div`
   padding: 19px 18px 18px 20px;
-  border: 1px solid #f2f2f2;
 `;
 const PriceWrap = styled.div`
   display: flex;

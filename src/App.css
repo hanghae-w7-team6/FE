@@ -1,6 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@300;400;500&display=swap");
+
 :root {
   --swiper-theme-color: #007aff;
-
+  font-family: "Noto Sans", "malgun gothic", AppleGothic, dotum, sans-serif;
 }
 html,
 button,
@@ -8,6 +10,7 @@ input,
 select,
 textarea {
   font-family: "Noto Sans", "malgun gothic", AppleGothic, dotum, sans-serif;
+  letter-spacing: -0.5px;
 }
 
 body,
@@ -28,9 +31,6 @@ body {
   user-select: none;
   background-color: #fff;
 }
-
-
-
 
 *,
 :after,
@@ -66,4 +66,5 @@ th {
 
 button {
   border-radius: 0;
+  border: none;
 }

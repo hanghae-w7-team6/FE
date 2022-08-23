@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   SuggestWraper,
   SuggestBox,
@@ -34,14 +34,12 @@ const Suggest = ({ children, list }) => {
     <SuggestWraper>
       <SuggestBox>
         <SuggestHead>
-          <div>
-            <span>{children}</span>
-          </div>
+          <div>{children && <span>{children}</span>}</div>
         </SuggestHead>
         <SuggestBody>
           <Slider {...settings}>
             {list?.map((item) => (
-              <SuggestList key={item.id} item={item} />
+              <SuggestList key={item.productId} item={item} />
             ))}
           </Slider>
         </SuggestBody>
