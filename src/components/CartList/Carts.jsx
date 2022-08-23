@@ -34,7 +34,7 @@ const Carts = ({ carts }) => {
 };
 export default Carts;
 
-const CartLine = styled.li`
+const CartLine = styled.ul`
   height: 78px;
   padding: 20px 0;
   display: flex;

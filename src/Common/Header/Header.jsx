@@ -43,7 +43,6 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const CartList = useSelector((state) => state.cart.cart);
-  console.log(CartList);
 
   useEffect(() => {
     dispatch(getCartAysnc());
