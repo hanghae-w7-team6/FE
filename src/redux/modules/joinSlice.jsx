@@ -10,6 +10,7 @@ export const joinThunk = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log(payload);
     try {
+
       const response = await axios.post(
         "http://52.78.13.173/user/join",
         payload
@@ -17,6 +18,7 @@ export const joinThunk = createAsyncThunk(
       return thunkAPI.fulfillWithValue(response.data); //thunkAPI를 이용해 통신 성공할 시 값 반환
     } catch (error) {
       return thunkAPI.rejectWithValue(error); //통신 실패시 에러값 반환
+
     }
   }
 );

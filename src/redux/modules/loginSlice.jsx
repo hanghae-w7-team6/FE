@@ -10,14 +10,17 @@ export const loginThunk = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log(payload);
     try {
+
       const response = await axios.post(
         "http://52.78.13.173/user/login",
         payload
       );
       localStorage.setItem("token", response.data.token);
       alert("로그인성공");
+
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
+      console.error(error);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }

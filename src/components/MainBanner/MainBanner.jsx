@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import useInterval from "../../hooks/useInterval";
 import {
   Banner,
@@ -39,19 +39,19 @@ const MainBanner = () => {
     }
   };
 
-  const onMouseEnter = () => {
+  const onMouseEnter = useCallback(() => {
     setStopInterval(true);
-  };
-  const onMouseLeave = () => {
+  }, []);
+  const onMouseLeave = useCallback(() => {
     setStopInterval(false);
-  };
+  }, []);
 
-  const onMouseDown = () => {
+  const onMouseDown = useCallback(() => {
     setStopInterval(true);
-  };
-  const onMouseUp = () => {
+  }, []);
+  const onMouseUp = useCallback(() => {
     setStopInterval(false);
-  };
+  }, []);
 
   useInterval(
     () => {
