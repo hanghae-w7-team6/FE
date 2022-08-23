@@ -17,7 +17,6 @@ const Main = () => {
   const dispatch = useDispatch();
 
   const CateogryFilter = useSelector((state) => state.category.data);
-  console.log("CateogryFilter:", CateogryFilter);
 
   const onChangeCategory = useCallback((e) => {
     setCategory(e.target.value);
@@ -31,7 +30,6 @@ const Main = () => {
     dispatch(getProductAsync());
   }, []);
 
-  console.log("Category:", category);
   const list = useSelector((state) => state.product.data);
 
   return (

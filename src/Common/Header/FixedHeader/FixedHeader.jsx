@@ -5,7 +5,7 @@ import { Categorywrap } from "../HeaderNav/NavStyles";
 import HeadNavCenter from "../elements/NavCenter";
 import { HeadRight, HeadRightContents, CartIconWrap } from "../styles";
 import { Link } from "react-router-dom";
-const FixedHeader = () => {
+const FixedHeader = ({ CartList }) => {
   const [showHover, setShowHover] = useState(false);
 
   const showNav = useCallback(() => {
@@ -32,9 +32,7 @@ const FixedHeader = () => {
           <button aria-label="찜하기" type="button"></button>
           <CartIconWrap>
             <Link to="/cart">
-              <button>
-                <span>1</span>
-              </button>
+              <button>{CartList && <span>{CartList.length}</span>}</button>
             </Link>
           </CartIconWrap>
         </HeadRightContents>
