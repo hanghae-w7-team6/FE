@@ -3,8 +3,7 @@ import styled from "styled-components";
 import Layouts from "../Common/Layout";
 import Header from "../Common/Header/Header";
 import { useSelector } from "react-redux";
-
-
+import CartItems from "../components/CartList/CartItems";
 const Cart = () => {
   const CartList = useSelector((state) => state.cart.cart);
   console.log(CartList);
@@ -31,7 +30,7 @@ const Cart = () => {
               </ButtonWrap>
             </SelectNav>
             <CartContainer>
-              <CartList></CartList>
+              <CartItems></CartItems>
             </CartContainer>
             <SelectNav>
               <ButtonWrap>
