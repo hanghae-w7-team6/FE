@@ -12,12 +12,9 @@ import { getProductAsync } from "../redux/modules/productSlice";
 import { getCategoryAsync } from "../redux/modules/categorySlice";
 
 const Main = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getProductAsync());
-  }, []);
-
   const [category, setCategory] = useState("추석선물세트");
+
+  const dispatch = useDispatch();
 
   const CateogryFilter = useSelector((state) => state.category.data);
   console.log("CateogryFilter:", CateogryFilter);
@@ -30,9 +27,12 @@ const Main = () => {
     dispatch(getCategoryAsync(category));
   }, [category]);
 
+  useEffect(() => {
+    dispatch(getProductAsync());
+  }, []);
+
   console.log("Category:", category);
   const list = useSelector((state) => state.product.data);
-  // console.log(list);
 
   return (
     <>

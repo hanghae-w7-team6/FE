@@ -44,7 +44,7 @@ export const CategoryButton = styled.button`
   background-color: rgb(247, 247, 247);
   color: (51, 51, 51);
   cursor: pointer;
-  &:active {
+  &:focus {
     background-color: rgb(95, 0, 128);
     color: rgb(255, 255, 255);
   }

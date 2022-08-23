@@ -8,7 +8,6 @@ export const getCategoryAsync = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const res = await instance.get(`/product/search/${data}`);
-      console.log("res:", res.data);
       return res.data;
     } catch (error) {
       console.error(error);
