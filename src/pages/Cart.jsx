@@ -162,7 +162,6 @@ const ButtonWrap = styled.div`
 const Label = styled.label`
   display: flex;
   align-items: center;
-  letter-spacing: -0.5px;
   font-weight: 600;
 
   input {
@@ -181,7 +180,6 @@ const Label = styled.label`
 const RightSide = styled.div`
   border: 1px solid brown;
   width: 284px;
-  letter-spacing: -0.5px;
 `;
 
 const CartStatusWrap = styled.div`
@@ -215,13 +213,11 @@ const SearchLocation = styled.div`
     padding-left: 24px;
     background: url(https://res.kurly.com/pc/service/cart/2007/ico_location.svg)
       0 50% no-repeat;
-    letter-spacing: -0.5px;
   }
 
   p {
     font-size: 16px;
     font-weight: 600;
-    letter-spacing: -0.5px;
     padding-bottom: 16px;
   }
 
@@ -229,7 +225,6 @@ const SearchLocation = styled.div`
     &:first-child {
       color: #5f0080;
       font-weight: 600;
-      letter-spacing: -0.5px;
     }
 
     &:last-child {
@@ -272,7 +267,6 @@ const Text = styled.div`
   font-size: 12px;
   text-align: right;
   padding-top: 15px;
-  letter-spacing: -1px;
 
   span {
     background-color: #ffbf00;

@@ -23,5 +23,4 @@ const Layout = styled.div`
   width: 1050px;
   height: auto;
   padding-top: 30px;
-  border: 1px solid red;
 `;

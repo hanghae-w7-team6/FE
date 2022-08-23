@@ -1,87 +1,91 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import Layouts from "../Common/Layout";
 import styled from "styled-components";
-// import { useParams } from "react-router-dom";
+import Header from "../Common/Header/Header";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadProductThunk } from "../redux/modules/detailSlice";
 
 const Detail = () => {
   const dispatch = useDispatch();
-  // const { productID } = useParams();
-  const detail = useSelector((state) => state.detail);
-  useEffect(() => {
-    dispatch(loadProductThunk());
-  }, []);
+  const { productId } = useParams();
+  const detail = useSelector((state) => state.detail.detailProduct);
 
+  useLayoutEffect(() => {
+    dispatch(loadProductThunk(productId));
+  }, [dispatch, productId]);
+  console.log(detail);
   return (
-    <Layouts>
-      <DetailWrap>
-        <DetailImg src={detail.productImage} />
-        <DetailInfo>
-          <ProductName>
-            <h2>{detail.productName}</h2>
-            <button style={{ width: "40px", height: "40px" }}></button>
-          </ProductName>
-          <ProductDesc>{detail.desc}</ProductDesc>
-          <ProductPriceWrap>
-            <span>{detail.price}</span>
-            <span> 원</span>
-          </ProductPriceWrap>
-          <Discount>
-            <span>일반5% &nbsp;|</span>
-            <span>&nbsp; 1개당 {detail.price * 0.05} 원 적립</span>
-          </Discount>
-          <ProductDelivery>
-            <span>배송</span>
-            <DeliveryInfo>
-              <p>{detail.delivery}</p>
-              <br />
-              <p>
-                23시 전 주문시 내일 아침 7시 전 도착
+    <>
+      <Header />
+      <Layouts>
+        <DetailWrap>
+          <DetailImg src={detail?.productImage} />
+          <DetailInfo>
+            <ProductName>
+              <h2>{detail?.productName}</h2>
+              <button style={{ width: "40px", height: "40px" }}></button>
+            </ProductName>
+            <ProductDesc>{detail?.desc}</ProductDesc>
+            <ProductPriceWrap>
+              <span>{detail?.price}</span>
+              <span> 원</span>
+            </ProductPriceWrap>
+            <Discount>
+              <span>일반5% &nbsp;|</span>
+              <span>&nbsp; 1개당 {detail?.price * 0.05} 원 할인</span>
+            </Discount>
+            <ProductDelivery>
+              <span>배송</span>
+              <DeliveryInfo>
+                <p>{detail?.delivery}</p>
                 <br />
-                (대구·부산·울산 샛별배송 운영시간 별도 확인)
-              </p>
-            </DeliveryInfo>
-          </ProductDelivery>
-          <ProductCategoryWrap>
-            <span>구분</span>
-            <span>{detail.category}</span>
-          </ProductCategoryWrap>
-          <ProductUnit>
-            <span>판매단위</span>
-            <span>1개</span>
-          </ProductUnit>
-          <ProductSeller>
-            <span>판매자</span>
-            <span>컬리</span>
-          </ProductSeller>
-          <ProductUI>
-            <ProductTotal>
-              <span>총 상품금액: </span>
-              <span>{detail.price}</span>
-              <span>원</span>
-            </ProductTotal>
-            <ButtonWrap>
-              <LikeButton>
-                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0yNS44MDcgNy44NjNhNS43NzcgNS43NzcgMCAwIDAtOC4xNzIgMEwxNiA5LjQ5N2wtMS42MzUtMS42MzRhNS43NzkgNS43NzkgMCAxIDAtOC4xNzMgOC4xNzJsMS42MzQgMS42MzQgNy40NjYgNy40NjdhMSAxIDAgMCAwIDEuNDE1IDBzMCAwIDAgMGw3LjQ2Ni03LjQ2N2gwbDEuNjM0LTEuNjM0YTUuNzc3IDUuNzc3IDAgMCAwIDAtOC4xNzJ6IiBzdHJva2U9IiM1RjAwODAiIHN0cm9rZS13aWR0aD0iMS42IiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" />
-                {/* <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0yNS44MDcgNy44NjNhNS43NzcgNS43NzcgMCAwIDAtOC4xNzIgMEwxNiA5LjQ5N2wtMS42MzUtMS42MzRhNS43NzkgNS43NzkgMCAxIDAtOC4xNzMgOC4xNzJsMS42MzQgMS42MzQgNy40NjYgNy40NjdhMSAxIDAgMCAwIDEuNDE1IDBzMCAwIDAgMGw3LjQ2Ni03LjQ2N2gwbDEuNjM0LTEuNjM0YTUuNzc3IDUuNzc3IDAgMCAwIDAtOC4xNzJ6IiBmaWxsPSIjRkY1QTVBIiBzdHJva2U9IiNGRjVBNUEiIHN0cm9rZS13aWR0aD0iMS42IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K"/> */}
-              </LikeButton>
-              <BellButton>
-                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTEyLjY2NiAyM2EzLjMzMyAzLjMzMyAwIDEgMCA2LjY2NiAwIi8+CiAgICAgICAgPHBhdGggZD0iTTI1Ljk5OCAyMi43MzhINmwuMDEzLS4wM2MuMDc2LS4xMzUuNDcxLS43MDQgMS4xODYtMS43MDlsLjc1LTEuMDV2LTYuNjM1YzAtNC40ODUgMy40MzgtOC4xNCA3Ljc0MS04LjMwOEwxNiA1YzQuNDQ2IDAgOC4wNSAzLjcyMiA4LjA1IDguMzE0djYuNjM0bDEuNzA3IDIuNDExYy4xNzMuMjUzLjI1NC4zOC4yNDIuMzh6IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICAgIDwvZz4KPC9zdmc+Cg==" />
-              </BellButton>
-              <PutButton>장바구니 담기</PutButton>
-            </ButtonWrap>
-          </ProductUI>
-        </DetailInfo>
-      </DetailWrap>
-    </Layouts>
+                <p>
+                  23시 전 주문시 내일 아침 7시 전 도착
+                  <br />
+                  (대구·부산·울산 샛별배송 운영시간 별도 확인)
+                </p>
+              </DeliveryInfo>
+            </ProductDelivery>
+            <ProductCategoryWrap>
+              <span>구분</span>
+              <span>{detail?.category}</span>
+            </ProductCategoryWrap>
+            <ProductUnit>
+              <span>판매단위</span>
+              <span>1개</span>
+            </ProductUnit>
+            <ProductSeller>
+              <span>판매자</span>
+              <span>컬리</span>
+            </ProductSeller>
+            <ProductUI>
+              <ProductTotal>
+                <span>총 상품금액: </span>
+                <span>{detail?.price * 0.95}</span>
+                <span>원</span>
+              </ProductTotal>
+              <ButtonWrap>
+                <LikeButton>
+                  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0yNS44MDcgNy44NjNhNS43NzcgNS43NzcgMCAwIDAtOC4xNzIgMEwxNiA5LjQ5N2wtMS42MzUtMS42MzRhNS43NzkgNS43NzkgMCAxIDAtOC4xNzMgOC4xNzJsMS42MzQgMS42MzQgNy40NjYgNy40NjdhMSAxIDAgMCAwIDEuNDE1IDBzMCAwIDAgMGw3LjQ2Ni03LjQ2N2gwbDEuNjM0LTEuNjM0YTUuNzc3IDUuNzc3IDAgMCAwIDAtOC4xNzJ6IiBzdHJva2U9IiM1RjAwODAiIHN0cm9rZS13aWR0aD0iMS42IiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" />
+                  {/* <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0yNS44MDcgNy44NjNhNS43NzcgNS43NzcgMCAwIDAtOC4xNzIgMEwxNiA5LjQ5N2wtMS42MzUtMS42MzRhNS43NzkgNS43NzkgMCAxIDAtOC4xNzMgOC4xNzJsMS42MzQgMS42MzQgNy40NjYgNy40NjdhMSAxIDAgMCAwIDEuNDE1IDBzMCAwIDAgMGw3LjQ2Ni03LjQ2N2gwbDEuNjM0LTEuNjM0YTUuNzc3IDUuNzc3IDAgMCAwIDAtOC4xNzJ6IiBmaWxsPSIjRkY1QTVBIiBzdHJva2U9IiNGRjVBNUEiIHN0cm9rZS13aWR0aD0iMS42IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K"/> */}
+                </LikeButton>
+                <BellButton>
+                  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTEyLjY2NiAyM2EzLjMzMyAzLjMzMyAwIDEgMCA2LjY2NiAwIi8+CiAgICAgICAgPHBhdGggZD0iTTI1Ljk5OCAyMi43MzhINmwuMDEzLS4wM2MuMDc2LS4xMzUuNDcxLS43MDQgMS4xODYtMS43MDlsLjc1LTEuMDV2LTYuNjM1YzAtNC40ODUgMy40MzgtOC4xNCA3Ljc0MS04LjMwOEwxNiA1YzQuNDQ2IDAgOC4wNSAzLjcyMiA4LjA1IDguMzE0djYuNjM0bDEuNzA3IDIuNDExYy4xNzMuMjUzLjI1NC4zOC4yNDIuMzh6IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICAgIDwvZz4KPC9zdmc+Cg==" />
+                </BellButton>
+                <PutButton>장바구니 담기</PutButton>
+              </ButtonWrap>
+            </ProductUI>
+          </DetailInfo>
+        </DetailWrap>
+      </Layouts>
+    </>
   );
 };
 
 export default Detail;
 
 const DetailWrap = styled.div`
-  border: 1px solid black;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -95,14 +99,12 @@ const DetailImg = styled.img`
 `;
 
 const DetailInfo = styled.div`
-  border: 1px solid black;
   display: flex;
   width: 560px;
   flex-direction: column;
 `;
 
 const ProductName = styled.div`
-  border: 1px solid greenyellow;
   display: flex;
   justify-content: space-between;
 
@@ -123,16 +125,13 @@ const ProductName = styled.div`
 `;
 
 const ProductDesc = styled.div`
-  border: 1px solid greenyellow;
   color: rgb(181, 181, 181);
   font-size: 14px;
   line-height: 34px;
-  letter-spacing: -0.5px;
   padding: 0px 0 8px 0;
 `;
 
 const ProductPriceWrap = styled.div`
-  border: 1px solid greenyellow;
   margin: 15px 0 0 0;
 
   span {
@@ -149,10 +148,8 @@ const ProductPriceWrap = styled.div`
 `;
 
 const Discount = styled.div`
-  border: 1px solid red;
   height: 24px;
   font-weight: bold;
-  letter-spacing: -0.5px;
   display: flex;
   text-align: center;
   align-items: center;
@@ -168,7 +165,6 @@ const Discount = styled.div`
 
 //  배송구분div 스타일
 const ProductDelivery = styled.div`
-  border: 1px solid greenyellow;
   display: flex;
   flex-direction: row;
   margin: 15px 0 0 0;
@@ -186,8 +182,6 @@ const ProductDelivery = styled.div`
   }
 `;
 const DeliveryInfo = styled.div`
-  border: 1px solid brown;
-
   p {
     &:first-child {
       font-size: 14px;
@@ -205,7 +199,6 @@ const DeliveryInfo = styled.div`
 
 // 카테고리 div 스타일
 const ProductCategoryWrap = styled.div`
-  border: 1px solid greenyellow;
   margin: 10px 0;
 
   span {
@@ -248,7 +241,6 @@ const ProductSeller = styled.div`
 
 // 디테일 우측 하단 가격/버튼wrap
 const ProductUI = styled.div`
-  border: 1px solid blue;
   margin-top: 40px;
 `;
 
@@ -273,7 +265,7 @@ const ProductTotal = styled.div`
 
 const ButtonWrap = styled.form`
   display: flex;
-  margin-top: 47px;
+  margin-top: 67px;
 `;
 
 const LikeButton = styled.button`
