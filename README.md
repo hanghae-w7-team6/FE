@@ -32,6 +32,11 @@
 
 - 3. [에러] Uncaught (in promise) Error: [Immer] An immer producer returned a new value _and_ modified its draft. Either return a new value _or_ modify the draft.
      - db에 값은 들어가는데 자꾸 이 메시지가 뜬다....왜??????와이????찾아봐야됨...
+       -> 정민 매니저님이 알려주신 코드.. 그래도 immer 오류 계속 뜸
+     ````js
+     // return state.user.push(action.payload); //state=데이터가 저장되는 공간, thunk에서는 .push()사용 가능!
+     // return current(state).user.push(action.payload); //immer....```
+     ````
 
 - 4. 내가 보기에는 모든 항목을 만족했는데도 안넘어가고 메세지가 뜸 ㅜㅜㅜ
 
@@ -46,6 +51,22 @@
 
 - 이정민매니저님 깃(https://github.com/social-bookmark-9/frontend/tree/main/src/redux)
 
-```
-
-```
+- 5. join api연결 후 axios 400에러, response.data.message에는 유효하지않은 항목(백에서 넘겨주는)
+     - 원인> dispatch로 값을 slice로 올려줄 때 object로 안 묶어줬음....
+     ```js
+     // 모든 항목을 만족했을 때만 submit!
+     const SubmitData = (e) => {
+       e.preventDefault();
+       if (
+         isIdValid &&
+         isPwValid &&
+         isConfirmPwValid &&
+         isNickNameValid &&
+         isEmailValid === true
+       ) {
+         dispatch(joinThunk({ userId, nickName, password, email })); // <- 여기!!
+       } else {
+         alert("만족안한 항목이 있나보군요!");
+       }
+     };
+     ```
