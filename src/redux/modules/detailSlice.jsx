@@ -5,10 +5,10 @@ const initialState = {};
 
 export const loadProductThunk = createAsyncThunk(
   "product/loadProduct",
-  async (thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
-      const res = await instance.get("/product");
-      return res.data[0];
+      const res = await instance.get(`/product/${data}`);
+      return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
