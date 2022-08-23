@@ -77,11 +77,12 @@ export const HeadMain = styled.div`
   padding-top: 36px;
 `;
 
-export const HeadLeft = styled.div`
+export const HeadLeft = styled(Link)`
   display: flex;
   -webkit-box-align: center;
   align-items: center;
   height: 63px;
+  text-decoration: none;
   & > img {
     flex: 0 0 82px;
   }

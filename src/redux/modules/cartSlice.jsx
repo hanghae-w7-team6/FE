@@ -44,6 +44,7 @@ export const addCartAysnc = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const res = await instance.post(`/cart/${data.productId}`, data.quantity);
+      console.log(res.data);
       return res.data;
     } catch (error) {
       console.error(error);

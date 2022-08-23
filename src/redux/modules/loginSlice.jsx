@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { instance } from "./instance";
-import axios from "axios";
 
 const initialState = {};
 
@@ -10,11 +9,7 @@ export const loginThunk = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log(payload);
     try {
-
-      const response = await axios.post(
-        "http://52.78.13.173/user/login",
-        payload
-      );
+      const response = await instance.post("/user/login", payload);
       localStorage.setItem("token", response.data.token);
       alert("로그인성공");
 
