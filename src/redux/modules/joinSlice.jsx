@@ -2,7 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { instance } from "./instance";
 
 // 초기값 선언
-const initialState = { isIdUsable: false, isEmailUsable: false };
+const initialState = {
+  isJoinSucceed: false,
+  isIdUsable: false,
+  isEmailUsable: false,
+};
 
 // thunk함수(회원가입) 선언
 export const joinThunk = createAsyncThunk(
@@ -10,6 +14,7 @@ export const joinThunk = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await instance.post("/user/join", payload);
+      console.log(response);
       return thunkAPI.fulfillWithValue(response.data); //thunkAPI를 이용해 통신 성공할 시 값 반환
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response); //통신 실패시 에러값 반환
@@ -53,17 +58,22 @@ export const emailCheckThunk = createAsyncThunk(
 const joinSlice = createSlice({
   name: "data",
   initialState,
-  reducers: {},
+  reducers: {
+    resetJoinState: (state, action) => {
+      state.isJoinSucceed = false;
+      state.isIdUsable = false;
+      state.isEmailUsable = false;
+    },
+  },
   extraReducers: {
     [joinThunk.fulfilled]: (state, action) => {
       //action.payload = response.data
       alert("가입이 완료되었습니다.");
-      state = action.payload;
-      window.location("/login");
+      state.isJoinSucceed = true;
     },
     [joinThunk.rejected]: (state, action) => {
       alert("다시 시도해주세요.");
-      return (state.error = action.payload);
+      state.isJoinSucceed = false;
     },
     [idCheckThunk.fulfilled]: (state, action) => {
       state.isIdUsable = true;
@@ -84,4 +94,8 @@ const joinSlice = createSlice({
   },
 });
 
+// reducer export
+export const { resetJoinState } = joinSlice.actions;
+
+// extra reducer export
 export default joinSlice;
