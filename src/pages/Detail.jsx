@@ -36,12 +36,15 @@ const Detail = () => {
             </ProductName>
             <ProductDesc>{detail?.desc}</ProductDesc>
             <ProductPriceWrap>
-              <span>{detail?.price}</span>
+              <span>{detail?.price.toLocaleString("ko-kr")}</span>
               <span> 원</span>
             </ProductPriceWrap>
             <Discount>
               <span>일반5% &nbsp;|</span>
-              <span>&nbsp; 1개당 {detail?.price * 0.05} 원 할인</span>
+              <span>
+                &nbsp; 1개당 {(detail?.price * 0.05).toLocaleString("ko-kr")} 원
+                할인
+              </span>
             </Discount>
             <ProductDelivery>
               <span>배송</span>
@@ -70,7 +73,7 @@ const Detail = () => {
             <ProductUI>
               <ProductTotal>
                 <span>총 상품금액: </span>
-                <span>{detail?.price * 0.95}</span>
+                <span>{(detail?.price * 0.95).toLocaleString("ko-kr")}</span>
                 <span>원</span>
               </ProductTotal>
               <ButtonWrap>

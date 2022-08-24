@@ -15,6 +15,7 @@ import {
   HeadRight,
   HeadRightContents,
   CartIconWrap,
+  HeadLogOut,
 } from "./styles";
 import logo from "./logo.svg";
 import HeaderNav from "./HeaderNav/HeaderNav";
@@ -22,6 +23,7 @@ import FixedHeader from "./FixedHeader/FixedHeader";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartAysnc } from "../../redux/modules/cartSlice";
+
 const Header = () => {
   const [showFixedHeader, setShwoFixedHeader] = useState(false);
 
@@ -44,13 +46,21 @@ const Header = () => {
   }
   const dispatch = useDispatch();
 
-  const CartList = useSelector((state) => state.cart.cart);
+  const CartList = useSelector((state) => state.cart.cart?.cart);
 
   useEffect(() => {
     if (loginCheck) {
       dispatch(getCartAysnc());
     }
   }, [loginCheck]);
+<<<<<<< HEAD
+=======
+
+  const onLogOut = useCallback(() => {
+    localStorage.clear();
+    window.location.reload();
+  }, []);
+>>>>>>> 0bd93af581b91f8960dfa371b393ba71da25eee8
 
   const onLogOut = useCallback(() => {
     localStorage.clear();
@@ -72,7 +82,11 @@ const Header = () => {
             <>
               <HeadUserLink to="/">{userData.nickName}님</HeadUserLink>
               <HeadeVertical />
+<<<<<<< HEAD
               <button onClick={onLogOut}>로그아웃</button>
+=======
+              <HeadLogOut onClick={onLogOut}>로그아웃</HeadLogOut>
+>>>>>>> 0bd93af581b91f8960dfa371b393ba71da25eee8
             </>
           )}
           <HeadeVertical />
@@ -106,7 +120,9 @@ const Header = () => {
               <button aria-label="찜하기" type="button"></button>
               <CartIconWrap>
                 <Link to="/cart">
-                  <button>{CartList && <span>{CartList.length}</span>}</button>
+                  <button>
+                    {CartList?.length > 0 && <span>{CartList.length}</span>}
+                  </button>
                 </Link>
               </CartIconWrap>
             </HeadRightContents>

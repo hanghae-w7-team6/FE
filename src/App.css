@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR:wght@300;400;500&display=swap");
 
+* {
+  font-family: "Noto Sans", sans-serif;
+  letter-spacing: -0.5px;
+}
 :root {
   --swiper-theme-color: #007aff;
   font-family: "Noto Sans", "malgun gothic", AppleGothic, dotum, sans-serif;

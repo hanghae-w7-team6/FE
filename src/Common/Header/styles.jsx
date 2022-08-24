@@ -205,3 +205,11 @@ export const CartIconWrap = styled.div`
     white-space: nowrap;
   }
 `;
+
+export const HeadLogOut = styled.div`
+  display: block;
+  cursor: pointer;
+  background-color: transparent;
+  text-decoration: none;
+  color: inherit;
+`;
