@@ -175,6 +175,7 @@ const RightSide = styled.div`
 
 const CartStatusWrap = styled.div`
   position: sticky;
+  top: 4em;
   height: auto;
 `;
 

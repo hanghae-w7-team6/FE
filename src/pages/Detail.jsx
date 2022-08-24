@@ -105,6 +105,7 @@ const Detail = () => {
                     },
                   }}
                   isOpen={modal}
+                  ariaHideApp={false}
                   onRequestClose={() => setModal(false)}
                 >
                   <ModalText>장바구니에 상품을 담았습니다.</ModalText>
