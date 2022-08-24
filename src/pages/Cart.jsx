@@ -49,7 +49,7 @@ const Cart = () => {
                 <PriceWrap>
                   <span>상품금액</span>
                   <span style={{ fontSize: "18px" }}>
-                    {totalPrice.toLocaleString("ko-kr") || 0}
+                    {totalPrice?.toLocaleString("ko-kr") || 0}
                     <span style={{ fontSize: "14px" }}> 원</span>
                   </span>
                 </PriceWrap>

@@ -16,11 +16,13 @@ function LoginForm() {
   const [password, onPasswordHandler] = useInput("");
 
   const submitHandler = (e) => {
+    e.preventDefault();
     if (userId === "" || password === "") {
       alert("아이디 혹은 비밀번호를 입력해주세요");
       return;
     }
     dispatch(loginThunk({ userId, password }));
+    nav("/");
   };
 
   const loginCheck = localStorage.getItem("token");
@@ -32,7 +34,7 @@ function LoginForm() {
     if (loginCheck) {
       nav("/");
     }
-  }, [nav, loginCheck]);
+  }, [loginCheck]);
 
   return (
     <Container>
