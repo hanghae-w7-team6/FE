@@ -37,7 +37,7 @@ const CartMap = ({ list }) => {
     dispatch(calcPrice(cartItem));
   }, [count]);
 
-  const deleteCart = useCallback(() => {
+  const deleteCart = () => {
     const cartFilter = cartItem?.filter((item) => {
       return item.productId !== list.productId;
     });
@@ -46,7 +46,7 @@ const CartMap = ({ list }) => {
     dispatch(deleteCartAysnc(list.productId));
     navigate("/cart");
     window.location.reload();
-  }, []);
+  };
 
   return (
     <CartLine>

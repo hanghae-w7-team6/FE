@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginThunk } from "../../redux/modules/loginSlice";
 import useInput from "../../hooks/useInput";
-
 import styled from "styled-components";
 import { Input } from "../../elements/Input";
 import { Btn } from "../../elements/Btn";
@@ -15,6 +14,8 @@ function LoginForm() {
   const [userId, onIdHandler] = useInput("");
   const [password, onPasswordHandler] = useInput("");
 
+  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (userId === "" || password === "") {
@@ -22,7 +23,9 @@ function LoginForm() {
       return;
     }
     dispatch(loginThunk({ userId, password }));
-    nav("/");
+    if (isLoggedIn) {
+      nav("/");
+    }
   };
 
   const loginCheck = localStorage.getItem("token");
