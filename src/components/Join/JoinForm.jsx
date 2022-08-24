@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,7 +6,7 @@ import {
   idCheckThunk,
   emailCheckThunk,
 } from "../../redux/modules/joinSlice";
-
+import { useNavigate } from "react-router-dom";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { Btn } from "../../elements/Btn";
 import { Input } from "../../elements/Input";
@@ -22,7 +22,7 @@ import Agreement from "./Agreement";
 
 function JoinForm() {
   const dispatch = useDispatch();
-
+  const nav = useNavigate();
   const [userInfo, setUserInfo] = useState({
     userId: "",
     password: "",
@@ -191,6 +191,7 @@ function JoinForm() {
     ) {
       if (isIdUsable && isEmailUsable) {
         dispatch(joinThunk({ userId, nickName, password, email, address }));
+        nav("/login");
       } else {
         alert("중복검사를 실시해주세요.");
       }
@@ -245,7 +246,7 @@ function JoinForm() {
 
         <InputWrapper>
           <Input
-            type="text"
+            type="password"
             name="password"
             value={password}
             onChange={handleInput}
@@ -270,7 +271,7 @@ function JoinForm() {
 
         <InputWrapper>
           <Input
-            type="text"
+            type="password"
             name="confirmPw"
             value={confirmPw.value}
             onChange={handleInput}

@@ -10,6 +10,7 @@ export const joinThunk = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await instance.post("/user/join", payload);
+      console.log(response);
       return thunkAPI.fulfillWithValue(response.data); //thunkAPI를 이용해 통신 성공할 시 값 반환
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response); //통신 실패시 에러값 반환
@@ -58,12 +59,12 @@ const joinSlice = createSlice({
     [joinThunk.fulfilled]: (state, action) => {
       //action.payload = response.data
       alert("가입이 완료되었습니다.");
+      console.log(action.payload);
       state = action.payload;
-      window.location("/login");
     },
     [joinThunk.rejected]: (state, action) => {
       alert("다시 시도해주세요.");
-      return (state.error = action.payload);
+      state.error = action.payload;
     },
     [idCheckThunk.fulfilled]: (state, action) => {
       state.isIdUsable = true;
