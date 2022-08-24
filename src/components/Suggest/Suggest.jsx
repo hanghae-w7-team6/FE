@@ -13,6 +13,16 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Suggest = ({ children, list }) => {
+  const SlickArrowLeft = ({ currentSlide, slideCount, children, ...props }) => (
+    <div {...props}>{children}</div>
+  );
+  const SlickArrowRight = ({
+    currentSlide,
+    slideCount,
+    children,
+    ...props
+  }) => <div {...props}>{children}</div>;
+
   const settings = {
     dots: false,
     infinite: true,
@@ -20,14 +30,14 @@ const Suggest = ({ children, list }) => {
     slidesToShow: 4,
     slidesToScroll: 3,
     nextArrow: (
-      <div>
+      <SlickArrowLeft>
         <NextButton />
-      </div>
+      </SlickArrowLeft>
     ),
     prevArrow: (
-      <div>
+      <SlickArrowRight>
         <PrevButton />
-      </div>
+      </SlickArrowRight>
     ),
   };
   return (

@@ -32,7 +32,9 @@ const FixedHeader = ({ CartList }) => {
           <button aria-label="찜하기" type="button"></button>
           <CartIconWrap>
             <Link to="/cart">
-              <button>{CartList && <span>{CartList.length}</span>}</button>
+              <button>
+                {CartList?.length > 0 && <span>{CartList.length}</span>}
+              </button>
             </Link>
           </CartIconWrap>
         </HeadRightContents>

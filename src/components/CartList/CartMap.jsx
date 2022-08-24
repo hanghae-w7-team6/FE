@@ -1,12 +1,56 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { calcPrice, deleteCartAysnc } from "../../redux/modules/cartSlice";
 
 const CartMap = ({ list }) => {
-  const [count, setCount] = useState(0);
+  const cartItem = JSON.parse(localStorage.getItem("cartItems")) || [];
+  const ItemCount = cartItem.find(
+    (item) => list.productId === item.productId
+  )?.quantity;
+
+  const [count, setCount] = useState(ItemCount || list.quantity);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const addItem = {
+    productId: list.productId,
+    quantity: list.quantity,
+    price: list.price * count,
+  };
+
+  useEffect(() => {
+    let isExists = false;
+    cartItem.forEach((item) => {
+      if (item.productId === list.productId) {
+        // 로컬 스토리지 아이디 중복이면 내용만 수정
+        item.quantity = count || list.quantity;
+        item.price = list.price * count;
+        isExists = true;
+      }
+    });
+    if (!isExists) {
+      // 중복이 아니면 푸쉬
+      cartItem.push(addItem);
+    }
+    localStorage.setItem("cartItems", JSON.stringify(cartItem));
+    dispatch(calcPrice(cartItem));
+  }, [count]);
+
+  const deleteCart = useCallback(() => {
+    const cartFilter = cartItem?.filter((item) => {
+      return item.productId !== list.productId;
+    });
+    console.log(cartFilter);
+    localStorage.setItem("cartItems", JSON.stringify(cartFilter));
+    dispatch(deleteCartAysnc(list.productId));
+    navigate("/cart");
+    window.location.reload();
+  }, []);
 
   return (
     <CartLine>
-      <CheckButton src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTExNjIgLTEwOTApIHRyYW5zbGF0ZSgxMDAgOTM2KSB0cmFuc2xhdGUoMTA0NiAxNDIpIHRyYW5zbGF0ZSgxNiAxMikiPgogICAgICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMS41IiBmaWxsPSIjRjJGMkYyIiBzdHJva2U9IiNFMkUyRTIiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggc3Ryb2tlPSIjREREIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNNyAxMi42NjdMMTAuMzg1IDE2IDE4IDguNSIvPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" />
+      <CheckButton />
       <Img src={list.productImage}></Img>
       <Title>{list.productName}</Title>
       <ButtonWrap>
@@ -33,10 +77,12 @@ const CartMap = ({ list }) => {
         ></Plus>
       </ButtonWrap>
       <CostWrap>
-        <SaleCost>{count * list.price * 0.95}</SaleCost>
-        <PrimeCost>{count * list.price}</PrimeCost>
+        <SaleCost>
+          {(count * list.price * 0.95).toLocaleString("ko-kr")}
+        </SaleCost>
+        <PrimeCost>{(count * list.price).toLocaleString("ko-kr")}</PrimeCost>
       </CostWrap>
-      <DeleteButton>
+      <DeleteButton onClick={deleteCart}>
         <span></span>
       </DeleteButton>
     </CartLine>
@@ -53,8 +99,8 @@ const CartLine = styled.li`
   border-bottom: 1px solid rgba(51, 51, 51, 0.1);
 `;
 
-const CheckButton = styled.img`
-  margin: 0 12px 0 0;
+const CheckButton = styled.div`
+  margin: 0 26px 0px 0;
 `;
 
 const Img = styled.img`
@@ -156,6 +202,7 @@ const DeleteButton = styled.button`
   height: 30px;
   margin-left: 9px;
   background-color: transparent;
+  cursor: pointer;
 
   span {
     width: 30px;

@@ -14,7 +14,7 @@ const store = configureStore({
     cart: cartSlice.reducer,
   },
   //   배포 환경일 때, devTools가 false가 된다.
-  devTools: process.env.NODE_ENV !== "development",
+  devTools: process.env.NODE_ENV === "development",
 });
 
 export default store;
