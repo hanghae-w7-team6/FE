@@ -66,7 +66,7 @@ const Admin = () => {
         }
       });
       alert("완료");
-      // window.location.reload();
+      window.location.reload();
     },
     [productName, price, desc, category, delivery]
   );
