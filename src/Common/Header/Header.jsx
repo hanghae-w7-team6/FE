@@ -20,7 +20,6 @@ import logo from "./logo.svg";
 import HeaderNav from "./HeaderNav/HeaderNav";
 import FixedHeader from "./FixedHeader/FixedHeader";
 import { Link } from "react-router-dom";
-import jwt_Decode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartAysnc } from "../../redux/modules/cartSlice";
 const Header = () => {
@@ -39,15 +38,24 @@ const Header = () => {
   }, [showFixedHeader]);
 
   const loginCheck = localStorage.getItem("token");
-  const userData = jwt_Decode(loginCheck);
+  let userData = null;
+  if (loginCheck) {
+    userData = loginCheck;
+  }
   const dispatch = useDispatch();
 
   const CartList = useSelector((state) => state.cart.cart);
 
   useEffect(() => {
-    dispatch(getCartAysnc());
-  }, []);
+    if (loginCheck) {
+      dispatch(getCartAysnc());
+    }
+  }, [loginCheck]);
 
+  const onLogOut = useCallback(() => {
+    localStorage.clear();
+    window.location.reload();
+  }, []);
   return (
     <>
       <HeadTop>
@@ -61,7 +69,11 @@ const Header = () => {
               </HeadUserLink>
             </>
           ) : (
-            <HeadUserLink to="/">{userData.nickName}님</HeadUserLink>
+            <>
+              <HeadUserLink to="/">{userData.nickName}님</HeadUserLink>
+              <HeadeVertical />
+              <button onClick={onLogOut}>로그아웃</button>
+            </>
           )}
           <HeadeVertical />
           <ServiceCenter>
