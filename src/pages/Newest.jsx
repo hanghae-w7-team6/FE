@@ -15,7 +15,7 @@ const Newest = () => {
     function onScroll() {
       if (
         window.scrollY + document.documentElement.clientHeight >
-        document.documentElement.scrollHeight - 100
+        document.documentElement.scrollHeight - 300
       ) {
         if (!isLoading) {
           dispatch(getPieceProductAsync());
@@ -33,7 +33,7 @@ const Newest = () => {
     };
   }, [isLoading]);
 
-  console.log(data, isLoading);
+  console.log(data?.slice().reverse());
   return (
     <>
       <Header />
@@ -46,9 +46,12 @@ const Newest = () => {
         </NewestBanner>
         <NewestHeader>신상품</NewestHeader>
         <NewestItemWrap>
-          {data?.map((list, idx) => {
-            return <NewestItem key={idx} list={list}></NewestItem>;
-          })}
+          {data
+            ?.slice()
+            .reverse()
+            .map((list, idx) => {
+              return <NewestItem key={idx} list={list}></NewestItem>;
+            })}
         </NewestItemWrap>
       </Layouts>
     </>
