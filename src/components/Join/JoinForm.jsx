@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import {
   joinThunk,
   idCheckThunk,
   emailCheckThunk,
 } from "../../redux/modules/joinSlice";
 
+import { useDaumPostcodePopup } from "react-daum-postcode";
 import { Btn } from "../../elements/Btn";
 import { Input } from "../../elements/Input";
 import {
@@ -19,11 +19,9 @@ import {
   SubmitBtnWrapper,
 } from "./StyleJoinForm";
 import Agreement from "./Agreement";
-import Modal from "./modal/Modal";
 
 function JoinForm() {
   const dispatch = useDispatch();
-  const nav = useNavigate();
 
   const [userInfo, setUserInfo] = useState({
     userId: "",
@@ -38,21 +36,6 @@ function JoinForm() {
   const handleInput = (e) => {
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
-  };
-  // 모든 항목을 만족했을 때만 submit!
-  const SubmitData = (e) => {
-    e.preventDefault();
-    if (
-      isIdValid &&
-      isPwValid &&
-      isConfirmPwValid &&
-      isNickNameValid &&
-      isEmailValid === true
-    ) {
-      dispatch(joinThunk({ userId, nickName, password, email }));
-    } else {
-      alert("만족안한 항목이 있나보군요!");
-    }
   };
 
   // ! ------------ 여기부터 유효성 검사 로직 -----------------
@@ -133,20 +116,32 @@ function JoinForm() {
     }
   };
   // ! ------------ 여기부터 중복 확인 로직 -----------------
+  const isIdUsable = useSelector((state) => state.join.isIdUsable);
+  const isEmailUsable = useSelector((state) => state.join.isEmailUsable);
+
   // 아이디 중복 확인 함수
   const userIdCheck = () => {
-    if (isIdValid) {
-      dispatch(idCheckThunk(userId));
+    if (userId === "") {
+      alert("4자 이상 8자 이하의 영문 및 숫자를 조합");
     } else {
-      alert(idRuleDesc);
+      if (isIdValid) {
+        dispatch(idCheckThunk(userId));
+      } else {
+        alert(idRuleDesc);
+      }
     }
   };
+
   // 이메일 중복 확인 함수
   const emailCheck = () => {
-    if (isEmailValid) {
-      dispatch(emailCheckThunk(email));
+    if (email === "") {
+      alert("이메일 형식으로 입력해 주세요.");
     } else {
-      alert(emailRuleDesc);
+      if (isEmailValid) {
+        dispatch(emailCheckThunk(email));
+      } else {
+        alert(emailRuleDesc);
+      }
     }
   };
 
@@ -157,7 +152,52 @@ function JoinForm() {
     setModal(!modal);
   };
 
-  // todo 카카오주소검색 api....
+  // ! ----------- 카카오 우편번호 API ------------------------------
+  const scriptUrl =
+    "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+  const open = useDaumPostcodePopup(scriptUrl);
+
+  const handleComplete = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+
+    console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    setUserInfo({ ...userInfo, address: fullAddress }); // 가져온 fullAddress를 state에 저장!
+  };
+  const handleClick = () => {
+    open({ onComplete: handleComplete });
+  };
+  // ! ------------------ 가입하기 버튼 --------------------------
+  // 모든 항목을 만족했을 때만 submit!
+  const SubmitData = (e) => {
+    e.preventDefault();
+    if (
+      isIdValid &&
+      isPwValid &&
+      isConfirmPwValid &&
+      isNickNameValid &&
+      isEmailValid === true
+    ) {
+      if (isIdUsable && isEmailUsable) {
+        dispatch(joinThunk({ userId, nickName, password, email, address }));
+      } else {
+        alert("중복검사를 실시해주세요.");
+      }
+    } else {
+      alert("모든 항목을 작성해주세요.");
+    }
+  };
   // ! ------------ 여기부터 뷰 -----------------
   return (
     <div>
@@ -189,6 +229,7 @@ function JoinForm() {
             onClick={() => {
               userIdCheck();
             }}
+            disabled={isIdUsable}
           >
             중복확인
           </Btn>
@@ -297,6 +338,7 @@ function JoinForm() {
             onClick={() => {
               emailCheck();
             }}
+            disabled={isEmailUsable}
           >
             중복확인
           </Btn>
@@ -313,13 +355,20 @@ function JoinForm() {
           <label>주소</label>
         </LabelWrapper>
         <InputWrapper>
-          <Btn width="100%" fontSize="14px" fontWeight="500" type="button">
+          <Btn
+            width="100%"
+            fontSize="14px"
+            fontWeight="500"
+            type="button"
+            onClick={handleClick}
+          >
             <SearchImg
               src="https://res.kurly.com/pc/service/cart/2007/ico_search.svg"
               alt="돋보기"
             />
             주소 검색
           </Btn>
+
           <Validation>
             <span>배송지에 따라 상품 정보가 달라질 수 있습니다.</span>
           </Validation>
@@ -327,7 +376,7 @@ function JoinForm() {
         <BtnWrapper />
       </StRow>
       <Line />
-      <Agreement /> {/*--------------- 시간있으면 작성.. */}
+      <Agreement />
       <SubmitBtnWrapper>
         <Btn
           fontSize="16px"
