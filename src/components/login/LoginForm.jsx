@@ -25,7 +25,9 @@ function LoginForm() {
 
   const loginCheck = localStorage.getItem("token");
   console.log(loginCheck);
+
   // 로컬스토리지에 토큰이 있으면 메인페이지로 이동
+
   useEffect(() => {
     if (loginCheck) {
       nav("/");

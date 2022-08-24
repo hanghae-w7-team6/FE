@@ -11,7 +11,7 @@ const Admin = () => {
   const [productName, onChangeName] = useInput("");
   const [price, onChangePrice] = useInput("");
   const [desc, onChangeDesc] = useInput("");
-  const [category, onChangeCategory] = useInput("");
+  const [category, setCategory] = useState("");
   const [delivery, onChangeDelivery] = useInput("");
   const [fileUrl, setFileUrl] = useState(null);
 
@@ -32,6 +32,10 @@ const Admin = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const CategorySelect = (e) => {
+    setCategory(e.target.value);
   };
 
   const onSubmitProduct = useCallback(
@@ -61,7 +65,7 @@ const Admin = () => {
           );
         }
       });
-      // alert("완료");
+      alert("완료");
       // window.location.reload();
     },
     [productName, price, desc, category, delivery]
@@ -96,7 +100,11 @@ const Admin = () => {
         </AdminLabel>
         <AdminLabel>
           <span>카테고리</span>
-          <AdminInput value={category} onChange={onChangeCategory} />
+          <select onChange={CategorySelect}>
+            <option value="추석선물세트">추석선물세트</option>
+            <option value="와인">와인</option>
+            <option value="과일">과일</option>
+          </select>
         </AdminLabel>
         <AdminLabel>
           <span>딜리버리</span>

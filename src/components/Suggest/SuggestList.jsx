@@ -24,10 +24,10 @@ const SuggestList = ({ item }) => {
           <ListFooter>
             <PriceBox>
               <PirceDC>5%</PirceDC>
-              <span>{Math.floor(item.price * 0.95)}원</span>
+              <span>{(item.price * 0.95).toLocaleString("ko-kr")} 원</span>
             </PriceBox>
           </ListFooter>
-          <RealPrice>{item.price}</RealPrice>
+          <RealPrice>{item.price.toLocaleString("ko-kr")}</RealPrice>
         </ListTitleBox>
       </Wrapper>
     </>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   HeadTop,
   UserHead,
@@ -15,11 +15,15 @@ import {
   HeadRight,
   HeadRightContents,
   CartIconWrap,
+  HeadLogOut,
 } from "./styles";
 import logo from "./logo.svg";
 import HeaderNav from "./HeaderNav/HeaderNav";
 import FixedHeader from "./FixedHeader/FixedHeader";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartAysnc } from "../../redux/modules/cartSlice";
+
 const Header = () => {
   const [showFixedHeader, setShwoFixedHeader] = useState(false);
 
@@ -35,15 +39,45 @@ const Header = () => {
     };
   }, [showFixedHeader]);
 
+  const loginCheck = localStorage.getItem("token");
+  let userData = null;
+  if (loginCheck) {
+    userData = loginCheck;
+  }
+  const dispatch = useDispatch();
+
+  const CartList = useSelector((state) => state.cart.cart?.cart);
+
+  useEffect(() => {
+    if (loginCheck) {
+      dispatch(getCartAysnc());
+    }
+  }, [loginCheck]);
+
+  const onLogOut = useCallback(() => {
+    localStorage.clear();
+    window.location.reload();
+  }, []);
+
   return (
     <>
       <HeadTop>
         <UserHead>
-          <HeadUserLink to="/join">회원가입</HeadUserLink>
-          <HeadeVertical />
-          <HeadUserLink to="/login" style={{ color: "inherit" }}>
-            로그인
-          </HeadUserLink>
+          {!userData ? (
+            <>
+              <HeadUserLink to="/join">회원가입</HeadUserLink>
+              <HeadeVertical />
+              <HeadUserLink to="/login" style={{ color: "inherit" }}>
+                로그인
+              </HeadUserLink>
+            </>
+          ) : (
+            <>
+              <HeadUserLink to="/">{userData.nickName}님</HeadUserLink>
+              <HeadeVertical />
+              <HeadLogOut onClick={onLogOut}>로그아웃</HeadLogOut>
+            </>
+          )}
           <HeadeVertical />
           <ServiceCenter>
             <HeadUserLink to="/" style={{ color: "inherit" }}>
@@ -59,7 +93,7 @@ const Header = () => {
           </ServiceCenter>
         </UserHead>
         <HeadMain>
-          <HeadLeft>
+          <HeadLeft to="/">
             <img src={logo} alt="마켓컬리 로고" />
             <LogoButton>마켓컬리</LogoButton>
           </HeadLeft>
@@ -76,7 +110,7 @@ const Header = () => {
               <CartIconWrap>
                 <Link to="/cart">
                   <button>
-                    <span>1</span>
+                    {CartList?.length > 0 && <span>{CartList.length}</span>}
                   </button>
                 </Link>
               </CartIconWrap>
@@ -85,7 +119,7 @@ const Header = () => {
         </HeadMain>
       </HeadTop>
       <HeaderNav />
-      {showFixedHeader && <FixedHeader />}
+      {showFixedHeader && <FixedHeader CartList={CartList} />}
     </>
   );
 };

@@ -5,6 +5,7 @@ import Header from "../Common/Header/Header";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadProductThunk } from "../redux/modules/detailSlice";
+import { addCartAysnc } from "../redux/modules/cartSlice";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,12 @@ const Detail = () => {
   useLayoutEffect(() => {
     dispatch(loadProductThunk(productId));
   }, [dispatch, productId]);
-  console.log(detail);
+
+  const onAddCart = (e) => {
+    e.preventDefault();
+    dispatch(addCartAysnc({ productId, quantity: 1 }));
+  };
+  // console.log(detail);
   return (
     <>
       <Header />
@@ -28,12 +34,15 @@ const Detail = () => {
             </ProductName>
             <ProductDesc>{detail?.desc}</ProductDesc>
             <ProductPriceWrap>
-              <span>{detail?.price}</span>
+              <span>{detail?.price.toLocaleString("ko-kr")}</span>
               <span> 원</span>
             </ProductPriceWrap>
             <Discount>
               <span>일반5% &nbsp;|</span>
-              <span>&nbsp; 1개당 {detail?.price * 0.05} 원 할인</span>
+              <span>
+                &nbsp; 1개당 {(detail?.price * 0.05).toLocaleString("ko-kr")} 원
+                할인
+              </span>
             </Discount>
             <ProductDelivery>
               <span>배송</span>
@@ -62,7 +71,7 @@ const Detail = () => {
             <ProductUI>
               <ProductTotal>
                 <span>총 상품금액: </span>
-                <span>{detail?.price * 0.95}</span>
+                <span>{(detail?.price * 0.95).toLocaleString("ko-kr")}</span>
                 <span>원</span>
               </ProductTotal>
               <ButtonWrap>
@@ -73,7 +82,7 @@ const Detail = () => {
                 <BellButton>
                   <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTEyLjY2NiAyM2EzLjMzMyAzLjMzMyAwIDEgMCA2LjY2NiAwIi8+CiAgICAgICAgPHBhdGggZD0iTTI1Ljk5OCAyMi43MzhINmwuMDEzLS4wM2MuMDc2LS4xMzUuNDcxLS43MDQgMS4xODYtMS43MDlsLjc1LTEuMDV2LTYuNjM1YzAtNC40ODUgMy40MzgtOC4xNCA3Ljc0MS04LjMwOEwxNiA1YzQuNDQ2IDAgOC4wNSAzLjcyMiA4LjA1IDguMzE0djYuNjM0bDEuNzA3IDIuNDExYy4xNzMuMjUzLjI1NC4zOC4yNDIuMzh6IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICAgIDwvZz4KPC9zdmc+Cg==" />
                 </BellButton>
-                <PutButton>장바구니 담기</PutButton>
+                <PutButton onClick={onAddCart}>장바구니 담기</PutButton>
               </ButtonWrap>
             </ProductUI>
           </DetailInfo>
@@ -95,7 +104,7 @@ const DetailImg = styled.img`
   width: 430px;
   height: 552px;
   /* background: url({detail.productImage}); */
-  background-size: cover;
+  object-fit: cover;
 `;
 
 const DetailInfo = styled.div`
@@ -300,4 +309,5 @@ const PutButton = styled.button`
   border: none;
   border-radius: 3px;
   font-size: 16px;
+  cursor: pointer;
 `;

@@ -1,6 +1,6 @@
 import { instance } from "./instance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+import { current } from "@reduxjs/toolkit";
 const initialState = [];
 
 export const getCartAysnc = createAsyncThunk(
@@ -20,7 +20,7 @@ export const deleteCartAysnc = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const res = await instance.delete(`/cart/${data}`);
-      return res.data;
+      return data;
     } catch (error) {
       console.error(error);
     }
@@ -43,7 +43,9 @@ export const addCartAysnc = createAsyncThunk(
   "add/CartList",
   async (data, thunkAPI) => {
     try {
-      const res = await instance.post(`/cart/${data.productId}`, data.quantity);
+      const res = await instance.post(`/cart/${data.productId}`, {
+        quantity: data.quantity,
+      });
       return res.data;
     } catch (error) {
       console.error(error);
@@ -54,12 +56,24 @@ export const addCartAysnc = createAsyncThunk(
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {},
+  reducers: {
+    calcPrice: (state, action) => {
+      let totalPrice = 0;
+      const list = action.payload;
+      console.log(list);
+      list.map((item) => {
+        return (totalPrice += item.price);
+      });
+      console.log(totalPrice);
+      return { ...state, totalPrice: totalPrice };
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(getCartAysnc.fulfilled, (state, action) => {
-        return (state = action.payload);
-      })
+      .addCase(getCartAysnc.fulfilled, (state, action) => ({
+        ...state,
+        cart: action.payload,
+      }))
       .addCase(deleteCartAysnc.fulfilled, (state, action) => ({
         ...state,
         message: action.payload,
@@ -74,3 +88,4 @@ export const cartSlice = createSlice({
       }));
   },
 });
+export const { calcPrice } = cartSlice.actions;
