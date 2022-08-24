@@ -9,6 +9,7 @@ export const Btn = (props) => {
       type={p.type}
       value={p.value}
       onClick={p.onClick}
+      disabled={p.disabled}
       // 버튼 css
       width={p.width}
       height={p.height}
@@ -41,4 +42,10 @@ const StBtn = styled.button`
   margin: 0;
   text-align: center;
   cursor: pointer;
+
+  &:disabled {
+    border: 1px solid rgb(221, 221, 221);
+    color: rgb(221, 221, 221);
+    cursor: default;
+  }
 `;

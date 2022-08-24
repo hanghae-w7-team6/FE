@@ -6,17 +6,23 @@ import {
   idCheckThunk,
   emailCheckThunk,
 } from "../../redux/modules/joinSlice";
-import { useNavigate } from "react-router-dom";
 
+import { useDaumPostcodePopup } from "react-daum-postcode";
 import { Btn } from "../../elements/Btn";
 import { Input } from "../../elements/Input";
+import {
+  StRow,
+  LabelWrapper,
+  InputWrapper,
+  BtnWrapper,
+  Validation,
+  SubmitBtnWrapper,
+} from "./StyleJoinForm";
 import Agreement from "./Agreement";
-import Modal from "./modal/Modal";
 
 function JoinForm() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  // input을 통해 들어오는 유저 정보
+
   const [userInfo, setUserInfo] = useState({
     userId: "",
     password: "",
@@ -31,24 +37,8 @@ function JoinForm() {
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
   };
-  // 모든 항목을 만족했을 때만 submit!
-  const SubmitData = (e) => {
-    e.preventDefault();
-    if (
-      isIdValid &&
-      isPwValid &&
-      isConfirmPwValid &&
-      isNickNameValid &&
-      isEmailValid === true
-    ) {
-      dispatch(joinThunk({ userId, nickName, password, email }));
-    } else {
-      alert("만족안한 항목이 있나보군요!");
-    }
-  };
+
   // ! ------------ 여기부터 유효성 검사 로직 -----------------
-  // todo 1. 유효성 검사(아이디, 이메일, 닉네임, 패스워드)
-  // todo 2. 유효하지 않은 문자는 애초부터 차단하기?
   // 유효성 검사 룰
   const userIdRegEx = /^[a-zA-Z0-9]{4,8}$/; // ID >> 숫자 및 알파벳만 가능(4~8글자)
   const passwordRegEx = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/; // Password >> 6~20글자 , 최소 1개 이상의 숫자 또는 특수문자 포함
@@ -125,16 +115,34 @@ function JoinForm() {
       setEmailRuleDesc("이메일 형식으로 입력해 주세요.");
     }
   };
+  // ! ------------ 여기부터 중복 확인 로직 -----------------
+  const isIdUsable = useSelector((state) => state.join.isIdUsable);
+  const isEmailUsable = useSelector((state) => state.join.isEmailUsable);
 
-  // todo 중복 체크(아이디, 이메일, 닉네임)
-  // ! 8/21 밥먹고 와서 여기부터 하기! 중복검사... 후.... 모달창 로직도...ㅜㅜㅜㅜ 다시 짜야됨
-  // 아이디 중복 검사
+  // 아이디 중복 확인 함수
   const userIdCheck = () => {
-    dispatch(idCheckThunk(userId));
+    if (userId === "") {
+      alert("4자 이상 8자 이하의 영문 및 숫자를 조합");
+    } else {
+      if (isIdValid) {
+        dispatch(idCheckThunk(userId));
+      } else {
+        alert(idRuleDesc);
+      }
+    }
   };
-  // 이메일 중복 검사
+
+  // 이메일 중복 확인 함수
   const emailCheck = () => {
-    dispatch(emailCheckThunk({ email }));
+    if (email === "") {
+      alert("이메일 형식으로 입력해 주세요.");
+    } else {
+      if (isEmailValid) {
+        dispatch(emailCheckThunk(email));
+      } else {
+        alert(emailRuleDesc);
+      }
+    }
   };
 
   // 모달창 로직(기본값이 false, 버튼 클릭시 true로 변경되면서 팝업)
@@ -144,18 +152,62 @@ function JoinForm() {
     setModal(!modal);
   };
 
-  // todo 카카오주소검색 api....
+  // ! ----------- 카카오 우편번호 API ------------------------------
+  const scriptUrl =
+    "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+  const open = useDaumPostcodePopup(scriptUrl);
+
+  const handleComplete = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+
+    console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    setUserInfo({ ...userInfo, address: fullAddress }); // 가져온 fullAddress를 state에 저장!
+  };
+  const handleClick = () => {
+    open({ onComplete: handleComplete });
+  };
+  // ! ------------------ 가입하기 버튼 --------------------------
+  // 모든 항목을 만족했을 때만 submit!
+  const SubmitData = (e) => {
+    e.preventDefault();
+    if (
+      isIdValid &&
+      isPwValid &&
+      isConfirmPwValid &&
+      isNickNameValid &&
+      isEmailValid === true
+    ) {
+      if (isIdUsable && isEmailUsable) {
+        dispatch(joinThunk({ userId, nickName, password, email, address }));
+      } else {
+        alert("중복검사를 실시해주세요.");
+      }
+    } else {
+      alert("모든 항목을 작성해주세요.");
+    }
+  };
   // ! ------------ 여기부터 뷰 -----------------
   return (
     <div>
       <StRow>
         <LabelWrapper>
-          <Label>
+          <label>
             아이디
-            <MandatoryMark>*</MandatoryMark>
-          </Label>
+            <span>*</span>
+          </label>
         </LabelWrapper>
-
         <InputWrapper>
           <Input
             type="text"
@@ -176,8 +228,8 @@ function JoinForm() {
             type="button"
             onClick={() => {
               userIdCheck();
-              // showModal();
             }}
+            disabled={isIdUsable}
           >
             중복확인
           </Btn>
@@ -185,10 +237,10 @@ function JoinForm() {
       </StRow>
       <StRow>
         <LabelWrapper>
-          <Label>
+          <label>
             비밀번호
-            <MandatoryMark>*</MandatoryMark>
-          </Label>
+            <span>*</span>
+          </label>
         </LabelWrapper>
 
         <InputWrapper>
@@ -210,10 +262,10 @@ function JoinForm() {
       </StRow>
       <StRow>
         <LabelWrapper>
-          <Label>
+          <label>
             비밀번호확인
-            <MandatoryMark>*</MandatoryMark>
-          </Label>
+            <span>*</span>
+          </label>
         </LabelWrapper>
 
         <InputWrapper>
@@ -235,10 +287,10 @@ function JoinForm() {
       </StRow>
       <StRow>
         <LabelWrapper>
-          <Label>
+          <label>
             닉네임
-            <MandatoryMark>*</MandatoryMark>
-          </Label>
+            <span>*</span>
+          </label>
         </LabelWrapper>
 
         <InputWrapper>
@@ -260,10 +312,10 @@ function JoinForm() {
       </StRow>
       <StRow>
         <LabelWrapper>
-          <Label>
+          <label>
             이메일
-            <MandatoryMark>*</MandatoryMark>
-          </Label>
+            <span>*</span>
+          </label>
         </LabelWrapper>
 
         <InputWrapper>
@@ -284,32 +336,39 @@ function JoinForm() {
           <Btn
             type="button"
             onClick={() => {
-              // emailCheck();
-              // showModal();
+              emailCheck();
             }}
+            disabled={isEmailUsable}
           >
             중복확인
           </Btn>
         </BtnWrapper>
         {/* --------- 모달창 ------------- */}
-        {modal ? (
+        {/* {modal ? (
           <Modal modal={modal} setModal={setModal}>
             {emailRuleDesc}
           </Modal>
-        ) : null}
+        ) : null} */}
       </StRow>
       <StRow>
         <LabelWrapper>
-          <Label>주소</Label>
+          <label>주소</label>
         </LabelWrapper>
         <InputWrapper>
-          <Btn width="100%" fontSize="14px" fontWeight="500" type="button">
-            <BtnImg
+          <Btn
+            width="100%"
+            fontSize="14px"
+            fontWeight="500"
+            type="button"
+            onClick={handleClick}
+          >
+            <SearchImg
               src="https://res.kurly.com/pc/service/cart/2007/ico_search.svg"
               alt="돋보기"
             />
             주소 검색
           </Btn>
+
           <Validation>
             <span>배송지에 따라 상품 정보가 달라질 수 있습니다.</span>
           </Validation>
@@ -317,7 +376,7 @@ function JoinForm() {
         <BtnWrapper />
       </StRow>
       <Line />
-      <Agreement /> {/*--------------- 시간있으면 작성.. */}
+      <Agreement />
       <SubmitBtnWrapper>
         <Btn
           fontSize="16px"
@@ -335,67 +394,12 @@ function JoinForm() {
   );
 }
 export default JoinForm;
-
-const StRow = styled.div`
-  display: inline-flex;
-  width: 100%;
-  padding: 10px 20px;
-`;
-
-const LabelWrapper = styled.div`
-  display: block;
-  width: 139px;
-  padding-top: 12px;
-`;
-const Label = styled.label`
-  color: rgb(51, 51, 51);
-  font-size: 12px;
-  line-height: 20px;
-`;
-const MandatoryMark = styled.span`
-  color: #ee6a7b;
-`;
-
-const InputWrapper = styled.div`
-  flex: 1 1 0%;
-  position: relative;
-`;
-
-const BtnWrapper = styled.div`
-  width: 120px;
-  margin-left: 8px;
-  visibility: ${(props) => props.visibility || "hidden"};
-`;
-
-const Validation = styled.div`
-  padding: 10px 0;
-  & p {
-    font-size: ${(props) => props.fontSize || "13px"};
-    color: ${(props) => props.color || " rgb(240, 63, 64)"};
-    margin-top: -4px;
-  }
-
-  & span {
-    display: block;
-    /* margin-top: 10px; */
-    font-size: 12px;
-    line-height: 18px;
-    color: rgb(102, 102, 102);
-  }
-`;
-const SubmitBtnWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  border-top: 1px solid rgb(247, 247, 247);
-  padding: 40px 0px;
-`;
-
 const Line = styled.div`
   padding: 10px 0px;
   border-bottom: 1px solid rgb(51, 51, 51);
 `;
 
-const BtnImg = styled.img`
+const SearchImg = styled.img`
   display: inline-block;
   width: 20px;
   height: 20px;

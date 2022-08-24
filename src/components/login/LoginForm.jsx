@@ -21,16 +21,18 @@ function LoginForm() {
       return;
     }
     dispatch(loginThunk({ userId, password }));
-    //  ! 아이디 + 비밀번호를 모두 입력해야 서브밋 아니면 "아이디 혹은 비밀번호를 입력해주세요" 출력
   };
+
   const loginCheck = localStorage.getItem("token");
   console.log(loginCheck);
+
+  // 로컬스토리지에 토큰이 있으면 메인페이지로 이동
 
   useEffect(() => {
     if (loginCheck) {
       nav("/");
     }
-  }, [loginCheck]);
+  }, [nav, loginCheck]);
 
   return (
     <Container>
