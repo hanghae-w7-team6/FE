@@ -18,7 +18,7 @@ import {
   BtnWrapper,
   Validation,
   SubmitBtnWrapper,
-} from "./StyleJoinForm";
+} from "./Style";
 import Agreement from "./Agreement";
 
 function JoinForm() {
