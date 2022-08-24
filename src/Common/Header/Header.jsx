@@ -53,12 +53,19 @@ const Header = () => {
       dispatch(getCartAysnc());
     }
   }, [loginCheck]);
+<<<<<<< HEAD
+=======
 
   const onLogOut = useCallback(() => {
     localStorage.clear();
     window.location.reload();
   }, []);
+>>>>>>> 0bd93af581b91f8960dfa371b393ba71da25eee8
 
+  const onLogOut = useCallback(() => {
+    localStorage.clear();
+    window.location.reload();
+  }, []);
   return (
     <>
       <HeadTop>
@@ -75,7 +82,11 @@ const Header = () => {
             <>
               <HeadUserLink to="/">{userData.nickName}님</HeadUserLink>
               <HeadeVertical />
+<<<<<<< HEAD
+              <button onClick={onLogOut}>로그아웃</button>
+=======
               <HeadLogOut onClick={onLogOut}>로그아웃</HeadLogOut>
+>>>>>>> 0bd93af581b91f8960dfa371b393ba71da25eee8
             </>
           )}
           <HeadeVertical />
