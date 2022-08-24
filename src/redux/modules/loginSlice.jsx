@@ -10,8 +10,8 @@ export const loginThunk = createAsyncThunk(
     console.log(payload);
     try {
       const response = await instance.post("/user/login", payload);
-      localStorage.setItem("token", response.data.token);
       alert("로그인성공");
+      localStorage.setItem("token", response.data.token);
 
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {

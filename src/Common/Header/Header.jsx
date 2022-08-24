@@ -15,14 +15,15 @@ import {
   HeadRight,
   HeadRightContents,
   CartIconWrap,
+  HeadLogOut,
 } from "./styles";
 import logo from "./logo.svg";
 import HeaderNav from "./HeaderNav/HeaderNav";
 import FixedHeader from "./FixedHeader/FixedHeader";
 import { Link } from "react-router-dom";
-import jwt_Decode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartAysnc } from "../../redux/modules/cartSlice";
+
 const Header = () => {
   const [showFixedHeader, setShwoFixedHeader] = useState(false);
 
@@ -39,13 +40,23 @@ const Header = () => {
   }, [showFixedHeader]);
 
   const loginCheck = localStorage.getItem("token");
-  const userData = jwt_Decode(loginCheck);
+  let userData = null;
+  if (loginCheck) {
+    userData = loginCheck;
+  }
   const dispatch = useDispatch();
 
-  const CartList = useSelector((state) => state.cart.cart);
+  const CartList = useSelector((state) => state.cart.cart?.cart);
 
   useEffect(() => {
-    dispatch(getCartAysnc());
+    if (loginCheck) {
+      dispatch(getCartAysnc());
+    }
+  }, [loginCheck]);
+
+  const onLogOut = useCallback(() => {
+    localStorage.clear();
+    window.location.reload();
   }, []);
 
   return (
@@ -61,7 +72,11 @@ const Header = () => {
               </HeadUserLink>
             </>
           ) : (
-            <HeadUserLink to="/">{userData.nickName}님</HeadUserLink>
+            <>
+              <HeadUserLink to="/">{userData.nickName}님</HeadUserLink>
+              <HeadeVertical />
+              <HeadLogOut onClick={onLogOut}>로그아웃</HeadLogOut>
+            </>
           )}
           <HeadeVertical />
           <ServiceCenter>
@@ -94,7 +109,9 @@ const Header = () => {
               <button aria-label="찜하기" type="button"></button>
               <CartIconWrap>
                 <Link to="/cart">
-                  <button>{CartList && <span>{CartList.length}</span>}</button>
+                  <button>
+                    {CartList?.length > 0 && <span>{CartList.length}</span>}
+                  </button>
                 </Link>
               </CartIconWrap>
             </HeadRightContents>
