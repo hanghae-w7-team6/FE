@@ -24,18 +24,21 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartAysnc } from "../../redux/modules/cartSlice";
 import jwtDecode from "jwt-decode";
+import { instance } from "../../redux/modules/instance";
 
 const Header = () => {
   const [showFixedHeader, setShwoFixedHeader] = useState(false);
 
+  let userData = [];
+  if (localStorage.token) {
+    const token = localStorage.getItem("token");
+    instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    userData = jwtDecode(localStorage.token);
+  }
+
   const dispatch = useDispatch();
 
   const CartList = useSelector((state) => state?.cart?.cart?.cart);
-
-  let userData = [];
-  if (localStorage.getItem("token")) {
-    userData = jwtDecode(localStorage.token);
-  }
 
   useEffect(() => {
     function onScroll() {
@@ -53,7 +56,7 @@ const Header = () => {
     if (userData.nickName) {
       dispatch(getCartAysnc());
     }
-  }, [userData]);
+  }, []);
 
   const onLogOut = useCallback(() => {
     localStorage.clear();

@@ -1,6 +1,6 @@
 import { instance } from "./instance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { current } from "@reduxjs/toolkit";
+
 const initialState = [];
 
 export const getCartAysnc = createAsyncThunk(
