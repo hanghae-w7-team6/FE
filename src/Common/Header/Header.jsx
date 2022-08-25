@@ -30,7 +30,7 @@ const Header = () => {
 
   const dispatch = useDispatch();
 
-  const CartList = useSelector((state) => state.cart.cart?.cart);
+  const CartList = useSelector((state) => state?.cart?.cart?.cart);
 
   let userData = [];
   if (localStorage.getItem("token")) {
@@ -49,11 +49,11 @@ const Header = () => {
     };
   }, [showFixedHeader]);
 
-  useEffect(() => {
-    if (userData.nickName) {
-      dispatch(getCartAysnc());
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //   if (userData.nickName) {
+  //     dispatch(getCartAysnc());
+  //   }
+  // }, [userData]);
 
   const onLogOut = useCallback(() => {
     localStorage.clear();
@@ -112,7 +112,7 @@ const Header = () => {
               <CartIconWrap>
                 <Link to="/cart">
                   <button>
-                    {CartList?.length > 0 && <span>{CartList.length}</span>}
+                    {CartList?.length > 0 && <span>{CartList?.length}</span>}
                   </button>
                 </Link>
               </CartIconWrap>
