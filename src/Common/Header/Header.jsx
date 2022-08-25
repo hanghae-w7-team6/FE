@@ -49,11 +49,11 @@ const Header = () => {
     };
   }, [showFixedHeader]);
 
-  // useEffect(() => {
-  //   if (userData.nickName) {
-  //     dispatch(getCartAysnc());
-  //   }
-  // }, [userData]);
+  useEffect(() => {
+    if (userData.nickName) {
+      dispatch(getCartAysnc());
+    }
+  }, [userData]);
 
   const onLogOut = useCallback(() => {
     localStorage.clear();
