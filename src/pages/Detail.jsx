@@ -29,7 +29,7 @@ const Detail = () => {
     setModal(true);
     dispatch(addCartAysnc({ productId, quantity: 1 }));
   };
-  // console.log(detail);
+
   return (
     <>
       <Header />

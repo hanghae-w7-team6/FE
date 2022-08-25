@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const HeadNavCenter = () => {
   return (
     <NavCenter>
       <li>
-        <span>신상품</span>
+        <NavLink to="/newest">신상품</NavLink>
       </li>
       <li>
         <span>베스트</span>
@@ -45,4 +46,13 @@ export const NavCenter = styled.ul`
     color: rgb(51, 51, 51);
     cursor: pointer;
   }
+`;
+
+export const NavLink = styled(Link)`
+  text-decoration: none;
+  height: fit-content;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(51, 51, 51);
+  cursor: pointer;
 `;

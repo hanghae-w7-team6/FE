@@ -27,6 +27,18 @@ export const getProductAsync = createAsyncThunk(
   }
 );
 
+export const getPieceProductAsync = createAsyncThunk(
+  "get/PeiceProdut",
+  async () => {
+    try {
+      const res = await instance.get("/product/list");
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
 export const productSlice = createSlice({
   name: "product",
   initialState,
@@ -39,7 +51,16 @@ export const productSlice = createSlice({
       }))
       .addCase(getProductAsync.fulfilled, (state, action) => {
         return (state = action.payload);
-      });
+      })
+      .addCase(getPieceProductAsync.fulfilled, (state, action) => ({
+        ...state,
+        data: action?.payload.data.concat(state.data),
+        isLoading: false,
+      }))
+      .addCase(getPieceProductAsync.pending, (state, action) => ({
+        ...state,
+        isLoading: true,
+      }));
   },
 });
 

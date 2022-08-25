@@ -12,34 +12,32 @@ import SuggestList from "./SuggestList";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const Suggest = ({ children, list }) => {
-  const SlickArrowLeft = ({ currentSlide, slideCount, children, ...props }) => (
-    <div {...props}>{children}</div>
-  );
-  const SlickArrowRight = ({
-    currentSlide,
-    slideCount,
-    children,
-    ...props
-  }) => <div {...props}>{children}</div>;
+const SlickArrowLeft = ({ currentSlide, slideCount, children, ...props }) => (
+  <div {...props}>{children}</div>
+);
+const SlickArrowRight = ({ currentSlide, slideCount, children, ...props }) => (
+  <div {...props}>{children}</div>
+);
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 3,
-    nextArrow: (
-      <SlickArrowLeft>
-        <NextButton />
-      </SlickArrowLeft>
-    ),
-    prevArrow: (
-      <SlickArrowRight>
-        <PrevButton />
-      </SlickArrowRight>
-    ),
-  };
+const settings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 3,
+  nextArrow: (
+    <SlickArrowLeft>
+      <NextButton />
+    </SlickArrowLeft>
+  ),
+  prevArrow: (
+    <SlickArrowRight>
+      <PrevButton />
+    </SlickArrowRight>
+  ),
+};
+
+const Suggest = ({ children, list }) => {
   return (
     <SuggestWraper>
       <SuggestBox>

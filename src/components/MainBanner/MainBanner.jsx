@@ -23,6 +23,18 @@ const slides = [
   {
     src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/26f022f6-8675-4768-b645-8751c22fb166.jpg",
   },
+  {
+    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/e555d31c-df05-44a6-ba00-eb64156e1c76.jpg",
+  },
+  {
+    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/300ef081-0ccc-4cf9-8eab-ec5117e7ec2c.jpg",
+  },
+  {
+    src: "https://img-cf.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/39c28de9-2a7f-43bc-9e41-648befae3c95",
+  },
+  {
+    src: "https://product-image.kurly.com/cdn-cgi/image/format=auto/banner/main/pc/img/026ebc78-835d-4bed-ad49-9a55b2ce0b36.jpg",
+  },
 ];
 
 const MainBanner = () => {
@@ -61,7 +73,7 @@ const MainBanner = () => {
         setCurrentIndex(currentIndex + 1);
       }
     },
-    stopInterval ? null : 3000
+    stopInterval ? null : 2000
   );
 
   return (
