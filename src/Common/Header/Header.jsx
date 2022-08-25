@@ -50,7 +50,7 @@ const Header = () => {
   }, [showFixedHeader]);
 
   useEffect(() => {
-    if (userData) {
+    if (userData.nickName) {
       dispatch(getCartAysnc());
     }
   }, []);
