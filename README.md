@@ -71,18 +71,42 @@
 
 ## 형진하
 
-### 공통
-
-- 마켓컬리 보라색 : rgb(95, 0, 128), #5F0080
-- 마켓컬리 기본 글자색 : rgb(51, 51, 51), #333333
-
 ### Features
 
-- 회원가입
-  - axios post
-  - 유효성검증/limited input
-  - 중복확인(서버와)
-  - 주소찾기(kakao api이용)
-- 로그인
+- 회원가입페이지
+  - 유효성검증
+  - 중복확인
+  - 주소찾기(kakao 우편번호 api이용)
+- 로그인페이지
 
 ### Trouble
+
+> axios instance 설정 후, `POST http://localhost:3000/%22서버API%22user/login 404 (Not Found)` 에러 발생
+
+서버로 데이터 요청시 url에 붙은 "표시를 유니코드로 인코딩되어 url에 포함되어 같이 인식 됨<br>
+=> [해결] node_modules와 .env 삭제 후 재설정
+
+<br>
+
+> 카카오 우편번호API를 이용하여 기본주소를 가져오고 거기에 상세주소를 추가로 입력하여 이 두 문자열을 합쳤을 때, 무한 랜더링 발생
+
+```js
+const [userInfo, setUserInfo] = useState({
+  userId: "",
+  password: "",
+  confirmPw: "",
+  nickName: "",
+  email: "",
+  address: "",
+});
+
+const { userId, password, confirmPw, nickName, email, address } = userInfo;
+const handleInput = (e) => {
+  const { name, value } = e.target;
+  setUserInfo({ ...userInfo, [name]: value });
+};
+```
+
+이런 식으로 인풋을 한 곳에서 모두 관리하려고 해서 새로운 데이터를 받아야 할 때 불필요한 랜더링이 발생하면서 무한 루프에 빠짐
+<br>
+=>[해결] useInput 커스텀 훅을 사용하여 각각의 인풋 상태를 개별 관리
