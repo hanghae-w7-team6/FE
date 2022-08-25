@@ -21,6 +21,6 @@ const Layout = styled.div`
   position: relative;
   margin: 0 auto;
   width: 1050px;
-  height: 300px;
+  height: auto;
   padding-top: 30px;
 `;
