@@ -5,6 +5,7 @@ import {
   joinThunk,
   idCheckThunk,
   emailCheckThunk,
+  emailAuthThunk,
   resetJoinState,
 } from "../../redux/modules/joinSlice";
 import { useNavigate } from "react-router-dom";
@@ -145,7 +146,17 @@ function JoinForm() {
       }
     }
   };
-
+  // const SendEamilAuth = () => {
+  //   if (email === "") {
+  //     alert("이메일 형식으로 입력해 주세요.");
+  //   } else {
+  //     if (isEmailValid) {
+  //       dispatch(emailAuthThunk(email));
+  //     } else {
+  //       alert(emailRuleDesc);
+  //     }
+  //   }
+  // };
   // 모달창 로직(기본값이 false, 버튼 클릭시 true로 변경되면서 팝업)
   const [modal, setModal] = useState(false);
 
@@ -348,6 +359,7 @@ function JoinForm() {
             type="button"
             onClick={() => {
               emailCheck();
+              // SendEamilAuth();
             }}
             disabled={isEmailUsable}
           >
