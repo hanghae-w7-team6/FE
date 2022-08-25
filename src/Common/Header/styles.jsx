@@ -98,7 +98,7 @@ export const LogoButton = styled.button`
   color: rgb(181, 181, 181);
   border-radius: 0;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   color: rgb(95, 0, 128);
   border: none;
   background-color: inherit;

@@ -7,12 +7,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadProductThunk } from "../redux/modules/detailSlice";
 import { addCartAysnc } from "../redux/modules/cartSlice";
 import Modal from "react-modal";
+import jwtDecode from "jwt-decode";
 
 const Detail = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
   const detail = useSelector((state) => state.detail.detailProduct);
   const [modal, setModal] = useState(false);
+
+  let userData = [];
+  if (localStorage.getItem("token")) {
+    userData = jwtDecode(localStorage.token);
+  }
 
   useLayoutEffect(() => {
     dispatch(loadProductThunk(productId));
@@ -85,40 +91,74 @@ const Detail = () => {
                 <BellButton>
                   <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIxLjYiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTEyLjY2NiAyM2EzLjMzMyAzLjMzMyAwIDEgMCA2LjY2NiAwIi8+CiAgICAgICAgPHBhdGggZD0iTTI1Ljk5OCAyMi43MzhINmwuMDEzLS4wM2MuMDc2LS4xMzUuNDcxLS43MDQgMS4xODYtMS43MDlsLjc1LTEuMDV2LTYuNjM1YzAtNC40ODUgMy40MzgtOC4xNCA3Ljc0MS04LjMwOEwxNiA1YzQuNDQ2IDAgOC4wNSAzLjcyMiA4LjA1IDguMzE0djYuNjM0bDEuNzA3IDIuNDExYy4xNzMuMjUzLjI1NC4zOC4yNDIuMzh6IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICAgIDwvZz4KPC9zdmc+Cg==" />
                 </BellButton>
-                <PutButton onClick={onAddCart}>장바구니 담기</PutButton>
-                <Modal
-                  style={{
-                    overlay: {},
-                    content: {
-                      width: "700px",
-                      height: "200px",
-                      border: "4px solid #5f0080",
-                      borderRadius: "5px",
-                      display: "flex",
-                      justifyContent: "center",
-                      margin: "12% auto 0 auto",
-                      fontSize: "30",
-                      letterSpacing: "-0.5",
-                      fontWeight: "600",
-                      flexDirection: "column",
-                      padding: "20px 80px",
-                    },
-                  }}
-                  isOpen={modal}
-                  onRequestClose={() => setModal(false)}
-                >
-                  <ModalText>장바구니에 상품을 담았습니다.</ModalText>
-                  <ModalWrap>
-                    <Img src={detail?.productImage}></Img>
-                    <ModalBox>
-                      <ModalTitle>{detail?.productName}</ModalTitle>
-                      <ModalPrice>
-                        {detail?.price}
-                        <span>원</span>
-                      </ModalPrice>
-                    </ModalBox>
-                  </ModalWrap>
-                </Modal>
+
+                {!userData.nickName ? (
+                  <>
+                    <PutButton onClick={onAddCart}>장바구니 담기</PutButton>
+                    <Modal
+                      style={{
+                        overlay: {},
+                        content: {
+                          width: "700px",
+                          height: "200px",
+                          border: "4px solid #5f0080",
+                          borderRadius: "5px",
+                          display: "flex",
+                          justifyContent: "center",
+                          margin: "12% auto 0 auto",
+                          fontSize: "30",
+                          letterSpacing: "-0.5",
+                          fontWeight: "600",
+                          flexDirection: "column",
+                          padding: "20px 80px",
+                        },
+                      }}
+                      isOpen={modal}
+                      ariaHideApp={false}
+                      onRequestClose={() => setModal(false)}
+                    >
+                      <ModalText>로그인이 필요합니다</ModalText>
+                    </Modal>
+                  </>
+                ) : (
+                  <>
+                    <PutButton onClick={onAddCart}>장바구니 담기</PutButton>
+                    <Modal
+                      style={{
+                        overlay: {},
+                        content: {
+                          width: "700px",
+                          height: "200px",
+                          border: "4px solid #5f0080",
+                          borderRadius: "5px",
+                          display: "flex",
+                          justifyContent: "center",
+                          margin: "12% auto 0 auto",
+                          fontSize: "30",
+                          letterSpacing: "-0.5",
+                          fontWeight: "600",
+                          flexDirection: "column",
+                          padding: "20px 80px",
+                        },
+                      }}
+                      isOpen={modal}
+                      ariaHideApp={false}
+                      onRequestClose={() => setModal(false)}
+                    >
+                      <ModalText>장바구니에 상품을 담았습니다.</ModalText>
+                      <ModalWrap>
+                        <Img src={detail?.productImage}></Img>
+                        <ModalBox>
+                          <ModalTitle>{detail?.productName}</ModalTitle>
+                          <ModalPrice>
+                            {detail?.price}
+                            <span>원</span>
+                          </ModalPrice>
+                        </ModalBox>
+                      </ModalWrap>
+                    </Modal>
+                  </>
+                )}
               </ButtonWrap>
             </ProductUI>
           </DetailInfo>
