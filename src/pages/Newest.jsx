@@ -33,7 +33,9 @@ const Newest = () => {
     };
   }, [isLoading]);
 
-  // console.log(data?.slice().reverse());
+  const ListData = data?.slice().reverse();
+  ListData?.shift();
+  console.log(ListData);
 
   return (
     <>
@@ -47,8 +49,7 @@ const Newest = () => {
         </NewestBanner>
         <NewestHeader>신상품</NewestHeader>
         <NewestItemWrap>
-          {data
-            ?.slice()
+          {ListData?.slice()
             .reverse()
             .map((list, idx) => {
               return <NewestItem key={idx} list={list}></NewestItem>;
