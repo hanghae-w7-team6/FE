@@ -35,7 +35,6 @@ const Newest = () => {
 
   const ListData = data?.slice().reverse();
   ListData?.shift();
-  console.log(ListData);
 
   return (
     <>
