@@ -1,4 +1,29 @@
-# Front End
+# 항해 7주차 클론코딩 Front End
+
+## 🛠 Stack
+
+- <strong>Client</strong>
+<p>
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black">
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
+  <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white">
+</p>
+
+- <strong>UI</strong>
+
+<p>
+  <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
+</p>
+
+- <strong>Deploy</strong>
+
+<p>
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=Vercel&logoColor=white">
+</p>
+
+
+
+</br>
 
 ## 김대은
 
@@ -30,7 +55,17 @@
 
 ### Features
 
+- 디테일페이지
+  - DB의 Product 데이터를 불러와 API에 맞게 배치
+  - react-modal 라이브러리를 사용한 전용모달 제작
+  - 로컬스토리지 통해 로그인여부 조회로 장바구니 담기 기능 제한
+  
+- 카트페이지
+  - CSS 작업
+  
 ### Trouble
+- 한줄평이 없는 상품의 경우에는 전체가 렌더링이 되지않음
+  - 옵셔널체이닝을 이용해 한줄평이 필수값이 아니여도 괜찮도록 
 
 ## 형진하
 
