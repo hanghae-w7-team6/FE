@@ -33,7 +33,7 @@ const Newest = () => {
     };
   }, [isLoading]);
 
-  console.log(data?.slice().reverse());
+  // console.log(data?.slice().reverse());
   return (
     <>
       <Header />
