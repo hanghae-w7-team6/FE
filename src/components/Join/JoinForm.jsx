@@ -184,13 +184,13 @@ function JoinForm() {
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    // console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
     setUserInfo({ ...userInfo, address: fullAddress }); // 가져온 fullAddress를 state에 저장!
   };
   const handleClick = () => {
     open({ onComplete: handleComplete });
   };
-  console.log(userInfo);
+  // console.log(userInfo);
   // ! ------------------ 가입하기 버튼 --------------------------
   // 모든 항목을 만족했을 때만 submit!
   const SubmitData = (e) => {

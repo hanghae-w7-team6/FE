@@ -14,7 +14,7 @@ export const joinThunk = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await instance.post("/user/join", payload);
-      console.log(response);
+      // console.log(response);
       return thunkAPI.fulfillWithValue(response.data); //thunkAPI를 이용해 통신 성공할 시 값 반환
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response); //통신 실패시 에러값 반환

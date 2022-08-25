@@ -41,7 +41,7 @@ const CartMap = ({ list }) => {
     const cartFilter = cartItem?.filter((item) => {
       return item.productId !== list.productId;
     });
-    console.log(cartFilter);
+    // console.log(cartFilter);
     localStorage.setItem("cartItems", JSON.stringify(cartFilter));
     dispatch(deleteCartAysnc(list.productId));
     navigate("/cart");

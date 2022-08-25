@@ -60,11 +60,11 @@ export const cartSlice = createSlice({
     calcPrice: (state, action) => {
       let totalPrice = 0;
       const list = action.payload;
-      console.log(list);
+      // console.log(list);
       list.map((item) => {
         return (totalPrice += item.price);
       });
-      console.log(totalPrice);
+      // console.log(totalPrice);
       return { ...state, totalPrice: totalPrice };
     },
   },
