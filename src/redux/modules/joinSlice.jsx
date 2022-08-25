@@ -54,6 +54,22 @@ export const emailCheckThunk = createAsyncThunk(
   }
 );
 
+// email 인증번호 보내는 thunk함수
+// export const emailAuthThunk = createAsyncThunk(
+//   "joinSlice/emailAuthThunk",
+//   async (payload, thunkAPI) => {
+//     try {
+//       const response = await instance.post("/user/email", {
+//         key: "email",
+//         value: payload,
+//       });
+//       return thunkAPI.fulfillWithValue(response);
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error);
+//     }
+//   }
+// );
+
 // 슬라이스
 const joinSlice = createSlice({
   name: "data",
@@ -90,6 +106,12 @@ const joinSlice = createSlice({
     [emailCheckThunk.rejected]: (state, action) => {
       state.isEmailUsable = false;
       alert(action.payload.errorMessage); // 중복된 이메일 입니다.
+    },
+    [emailAuthThunk.fulfilled]: (state, action) => {
+      console.log(action.payload);
+    },
+    [emailAuthThunk.rejected]: (state, action) => {
+      console.log(action.payload);
     },
   },
 });
