@@ -4,13 +4,16 @@ import Layouts from "../Common/Layout";
 import Header from "../Common/Header/Header";
 import { useSelector } from "react-redux";
 import CartItems from "../components/CartList/CartItems";
+import jwtDecode from "jwt-decode";
 
 const Cart = () => {
   const CartList = useSelector((state) => state.cart.cart?.cart);
   const totalPrice = useSelector((state) => state.cart?.totalPrice);
 
-  console.log(CartList);
-  console.log(totalPrice);
+  let userData = [];
+  if (localStorage.getItem("token")) {
+    userData = jwtDecode(localStorage.token);
+  }
 
   return (
     <>
@@ -32,18 +35,24 @@ const Cart = () => {
               <SearchLocation>
                 <h3>배송지</h3>
                 <div>
-                  <p>
-                    <span>배송지를 등록</span>하고
-                    <br />
-                    구매 가능한 상품을 확인하세요!
-                  </p>
+                  {!userData.address ? (
+                    <p>
+                      <span>배송지를 등록</span>하고
+                      <br />
+                      구매 가능한 상품을 확인하세요!
+                    </p>
+                  ) : (
+                    <p>{userData.address}</p>
+                  )}
                 </div>
-                <button>
-                  <span>
-                    <img src="https://res.kurly.com/pc/service/cart/2007/ico_search.svg" />
-                    주소 확인
-                  </span>
-                </button>
+                {!userData.address && (
+                  <button>
+                    <span>
+                      <img src="https://res.kurly.com/pc/service/cart/2007/ico_search.svg" />
+                      주소 확인
+                    </span>
+                  </button>
+                )}
               </SearchLocation>
               <TotalPrice>
                 <PriceWrap>
@@ -56,7 +65,7 @@ const Cart = () => {
                 <PriceWrap style={{ paddingTop: "12px" }}>
                   <span>상품할인 금액</span>
                   <span style={{ fontSize: "18px" }}>
-                    {(totalPrice * 0.05).toLocaleString("ko-kr") || 0}
+                    {totalPrice * 0.05 || 0}
                     <span style={{ fontSize: "14px" }}> 원</span>
                   </span>
                 </PriceWrap>
@@ -77,7 +86,7 @@ const Cart = () => {
                 <PriceWrap style={{ paddingTop: "12px" }}>
                   <span>결제예정금액</span>
                   <span style={{ fontSize: "20px" }}>
-                    {(totalPrice * 0.95).toLocaleString("ko-kr") || 0}
+                    {totalPrice * 0.95 || 0}
                     <span style={{ fontSize: "14px" }}> 원</span>
                   </span>
                 </PriceWrap>

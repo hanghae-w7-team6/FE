@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
   joinThunk,
   idCheckThunk,
   emailCheckThunk,
+  resetJoinState,
 } from "../../redux/modules/joinSlice";
-
+import { useNavigate } from "react-router-dom";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { Btn } from "../../elements/Btn";
 import { Input } from "../../elements/Input";
@@ -22,7 +23,7 @@ import Agreement from "./Agreement";
 
 function JoinForm() {
   const dispatch = useDispatch();
-
+  const nav = useNavigate();
   const [userInfo, setUserInfo] = useState({
     userId: "",
     password: "",
@@ -178,11 +179,13 @@ function JoinForm() {
   const handleClick = () => {
     open({ onComplete: handleComplete });
   };
+  console.log(userInfo);
   // ! ------------------ 가입하기 버튼 --------------------------
   // 모든 항목을 만족했을 때만 submit!
   const SubmitData = (e) => {
     e.preventDefault();
     if (
+      userInfo.address.length > 0 &&
       isIdValid &&
       isPwValid &&
       isConfirmPwValid &&
@@ -198,6 +201,14 @@ function JoinForm() {
       alert("모든 항목을 작성해주세요.");
     }
   };
+
+  const isJoinSucceed = useSelector((state) => state.join.isJoinSucceed);
+  useEffect(() => {
+    if (isJoinSucceed) {
+      dispatch(resetJoinState());
+      nav("/login");
+    }
+  }, [isJoinSucceed]);
   // ! ------------ 여기부터 뷰 -----------------
   return (
     <div>
@@ -245,7 +256,7 @@ function JoinForm() {
 
         <InputWrapper>
           <Input
-            type="text"
+            type="password"
             name="password"
             value={password}
             onChange={handleInput}
@@ -270,7 +281,7 @@ function JoinForm() {
 
         <InputWrapper>
           <Input
-            type="text"
+            type="password"
             name="confirmPw"
             value={confirmPw.value}
             onChange={handleInput}
@@ -353,6 +364,7 @@ function JoinForm() {
       <StRow>
         <LabelWrapper>
           <label>주소</label>
+          <span>*</span>
         </LabelWrapper>
         <InputWrapper>
           <Btn

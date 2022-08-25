@@ -7,7 +7,8 @@ function Agreement() {
     <AgreementSection>
       <div>
         <label>
-          이용약관동의<span style={{ color: "#ee6a7b" }}>*</span>
+          이용약관동의
+          {/* <span style={{ color: "#ee6a7b" }}>*</span> */}
         </label>
       </div>
       <div>

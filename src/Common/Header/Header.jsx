@@ -23,9 +23,19 @@ import FixedHeader from "./FixedHeader/FixedHeader";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartAysnc } from "../../redux/modules/cartSlice";
+import jwtDecode from "jwt-decode";
 
 const Header = () => {
   const [showFixedHeader, setShwoFixedHeader] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const CartList = useSelector((state) => state.cart.cart?.cart);
+
+  let userData = [];
+  if (localStorage.getItem("token")) {
+    userData = jwtDecode(localStorage.token);
+  }
 
   useEffect(() => {
     function onScroll() {
@@ -39,21 +49,11 @@ const Header = () => {
     };
   }, [showFixedHeader]);
 
-  const loginCheck = localStorage.getItem("token");
-  let userData = null;
-  if (loginCheck) {
-    userData = loginCheck;
-  }
-
-  const dispatch = useDispatch();
-
-  const CartList = useSelector((state) => state.cart.cart?.cart);
-
   useEffect(() => {
-    if (loginCheck) {
+    if (userData) {
       dispatch(getCartAysnc());
     }
-  }, [loginCheck]);
+  }, []);
 
   const onLogOut = useCallback(() => {
     localStorage.clear();
@@ -64,7 +64,7 @@ const Header = () => {
     <>
       <HeadTop>
         <UserHead>
-          {!userData ? (
+          {!userData.nickName ? (
             <>
               <HeadUserLink to="/join">회원가입</HeadUserLink>
               <HeadeVertical />
